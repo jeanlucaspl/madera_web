@@ -3100,6 +3100,31 @@ if (window.LANG !== 'es') setLang(window.LANG)
       }
     }
 
+    // ── 1. Intentar Gemini primero (maneja TODO cuando hay créditos) ──
+    showTyping()
+    let geminiOk = false
+    try {
+      const resp = await fetch(WORKER_URL, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ message: text, history: chatHistory.slice(-10) })
+      })
+      if(resp.ok) {
+        const data = await resp.json()
+        if(data.reply) {
+          hideTyping()
+          addMsg('bot', data.reply)
+          chatHistory.push({role:'user',content:text},{role:'assistant',content:data.reply})
+          showQR(QUICK_INIT)
+          geminiOk = true
+        }
+      }
+    } catch(e) { /* sin red */ }
+
+    if(geminiOk) { sendBtn.disabled=false; input.focus(); return }
+
+    // ── 2. Fallback rule-based completo (sin créditos o error) ──
+    hideTyping()
     const intent=detectIntent(text)
     const mesKey=detectarMes(text)
     const rango=detectarRango(text)
@@ -3114,32 +3139,10 @@ if (window.LANG !== 'es') setLang(window.LANG)
       return runSearch()
     }
     showTyping()
-    const[result]=await Promise.all([procesar(text),new Promise(r=>setTimeout(r,500))])
+    const[result]=await Promise.all([procesar(text),new Promise(r=>setTimeout(r,400))])
     hideTyping()
-    if(result && !result.tryGemini) {
-      addMsg('bot', result.reply)
-      chatHistory.push({role:'user',content:text},{role:'assistant',content:result.reply})
-      if(result.qr?.length) showQR(result.qr)
-    } else {
-      // Pregunta libre → intentar Gemini, fallback a rule-based si falla
-      showTyping()
-      let reply = result?.reply || t('chat.fallback')  // fallback por defecto
-      try {
-        const resp = await fetch(WORKER_URL, {
-          method: 'POST',
-          headers: {'Content-Type':'application/json'},
-          body: JSON.stringify({ message: text, history: chatHistory.slice(-10) })
-        })
-        if(resp.ok) {
-          const data = await resp.json()
-          if(data.reply) reply = data.reply
-        }
-      } catch(e) { /* sin créditos o sin red → usa fallback rule-based */ }
-      hideTyping()
-      addMsg('bot', reply)
-      chatHistory.push({role:'user',content:text},{role:'assistant',content:reply})
-      showQR(result?.qr?.length ? result.qr : getQUICK_INIT())
-    }
+    if(result){addMsg('bot',result.reply);if(result.qr?.length)showQR(result.qr)}
+    else{addMsg('bot',t('chat.fallback'));showQR(QUICK_INIT)}
     sendBtn.disabled=false; input.focus()
   }
 
