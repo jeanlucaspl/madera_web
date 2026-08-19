@@ -561,6 +561,36 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   transition: transform 0.8s var(--ease);
 }
 .exp-panel:hover .exp-img img { transform: scale(1.03); }
+/* Slideshow */
+.exp-img .slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+  transform: none;
+}
+.exp-img .slide.active { opacity: 1; }
+.exp-img .slide.active:hover { transform: scale(1.03); }
+/* Dots */
+.slide-dots {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 5;
+}
+.slide-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.45);
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+  padding: 0;
+}
+.slide-dot.active { background: #fff; transform: scale(1.25); }
 
 .exp-text {
   display: flex;
@@ -1719,8 +1749,13 @@ footer {
 
   <!-- Panel A: Piscina -->
   <div class="exp-panel exp-panel-a">
-    <div class="exp-img">
-      <img src="img/piscina-1-web.jpg" alt="Piscina selvática Madera Labrada">
+    <div class="exp-img exp-slideshow" data-interval="3800">
+      <img src="img/pool-a-web.jpg"     alt="Piscina Madera Labrada" class="slide active">
+      <img src="img/pool-b-web.jpg"     alt="Piscina Madera Labrada" class="slide">
+      <img src="img/pool-c-web.jpg"     alt="Vista piscina con hamacas" class="slide">
+      <img src="img/pool-d-web.jpg"     alt="Vista aérea piscina" class="slide">
+      <img src="img/pool-noche-web.jpg" alt="Piscina de noche" class="slide">
+      <div class="slide-dots"></div>
     </div>
     <div class="exp-text reveal">
       <p class="section-eyebrow" data-i18n="pool.eyebrow">Instalaciones</p>
@@ -1737,8 +1772,15 @@ footer {
 
   <!-- Panel B: Restaurante -->
   <div class="exp-panel exp-panel-b reverse">
-    <div class="exp-img">
-      <img src="img/restaurante-1-web.jpg" alt="Restaurante Los Tukos">
+    <div class="exp-img exp-slideshow" data-interval="4200">
+      <img src="img/rest-plato-a-web.jpg"  alt="Plato típico amazónico" class="slide active">
+      <img src="img/rest-plato-b-web.jpg"  alt="Arroz con plátano frente a piscina" class="slide">
+      <img src="img/rest-plato-c-web.jpg"  alt="Chifa amazónico" class="slide">
+      <img src="img/rest-bebida-web.jpg"   alt="Jugos y frutas tropicales" class="slide">
+      <img src="img/rest-cafe-web.jpg"     alt="Desayuno con vista" class="slide">
+      <img src="img/rest-noche-web.jpg"    alt="Restaurante Los Tukos de noche" class="slide">
+      <img src="img/rest-interior-web.jpg" alt="Interior del restaurante" class="slide">
+      <div class="slide-dots"></div>
     </div>
     <div class="exp-text reveal">
       <p class="section-eyebrow" data-i18n="rest.eyebrow">Gastronomía</p>
@@ -2191,6 +2233,42 @@ const drawer = document.getElementById('navDrawer')
 document.getElementById('navHamburger').addEventListener('click', () => drawer.classList.add('open'))
 document.getElementById('drawerClose').addEventListener('click', () => drawer.classList.remove('open'))
 drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => drawer.classList.remove('open')))
+
+// ── Experience panel slideshow ──────────────────
+document.querySelectorAll('.exp-slideshow').forEach(el => {
+  const slides = Array.from(el.querySelectorAll('.slide'))
+  const dotsWrap = el.querySelector('.slide-dots')
+  const interval = parseInt(el.dataset.interval) || 4000
+  let current = 0, timer = null
+
+  // Build dots
+  slides.forEach((_, i) => {
+    const d = document.createElement('button')
+    d.className = 'slide-dot' + (i === 0 ? ' active' : '')
+    d.addEventListener('click', () => goTo(i))
+    dotsWrap.appendChild(d)
+  })
+  const dots = Array.from(dotsWrap.querySelectorAll('.slide-dot'))
+
+  function goTo(idx) {
+    slides[current].classList.remove('active')
+    dots[current].classList.remove('active')
+    current = idx
+    slides[current].classList.add('active')
+    dots[current].classList.add('active')
+  }
+
+  function next() { goTo((current + 1) % slides.length) }
+
+  const obs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      timer = setInterval(next, interval)
+    } else {
+      clearInterval(timer)
+    }
+  }, { threshold: 0.25 })
+  obs.observe(el)
+})
 
 // ── Tour card stagger ───────────────────────────
 gsap.fromTo('.tour',
