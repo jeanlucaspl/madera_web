@@ -591,6 +591,15 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   padding: 0;
 }
 .slide-dot.active { background: #fff; transform: scale(1.25); }
+/* Gallery slideshow */
+.gal-slideshow .slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+.gal-slideshow .slide.active { opacity: 1; }
+.gal-slideshow .slide img { width: 100%; height: 100%; object-fit: cover; }
 
 .exp-text {
   display: flex;
@@ -1876,32 +1885,65 @@ footer {
     </div>
 
     <div class="galeria-grid reveal">
-      <div class="galeria-item">
-        <img src="img/hero-2-web.jpg" alt="Vista panorámica del lodge">
+      <!-- Cell 1: wide — Vista panorámica -->
+      <div class="galeria-item gal-slideshow" data-interval="4500">
+        <div class="slide active"><img src="img/hero-2-web.jpg" alt="Vista panorámica del lodge"></div>
+        <div class="slide"><img src="img/gal-pano-a.jpg" alt="Piscina desde el aire"></div>
+        <div class="slide"><img src="img/gal-pano-b.jpg" alt="Vista aérea del lodge"></div>
+        <div class="slide-dots"></div>
       </div>
-      <div class="galeria-item">
-        <img src="img/balcon-1-web.jpg" alt="Balcón con hamacas">
+      <!-- Cell 2: narrow — Balcones -->
+      <div class="galeria-item gal-slideshow" data-interval="4000">
+        <div class="slide active"><img src="img/balcon-1-web.jpg" alt="Balcón con hamacas"></div>
+        <div class="slide"><img src="img/gal-balcon-a.jpg" alt="Vista desde el balcón"></div>
+        <div class="slide"><img src="img/gal-balcon-b.jpg" alt="Hamaca con vista selvática"></div>
+        <div class="slide"><img src="img/gal-balcon-c.jpg" alt="Balcón con vista a la piscina"></div>
+        <div class="slide-dots"></div>
       </div>
-      <div class="galeria-item">
-        <img src="img/piscina-2-web.jpg" alt="Piscina selvática">
+      <!-- Cell 3: narrow — Piscina -->
+      <div class="galeria-item gal-slideshow" data-interval="3800">
+        <div class="slide active"><img src="img/piscina-2-web.jpg" alt="Piscina selvática"></div>
+        <div class="slide"><img src="img/pool-a-web.jpg" alt="Piscina Madera Labrada"></div>
+        <div class="slide"><img src="img/pool-c-web.jpg" alt="Vista piscina con hamacas"></div>
+        <div class="slide-dots"></div>
       </div>
-      <div class="galeria-item">
-        <img src="img/exterior-1-web.jpg" alt="Exterior del lodge">
+      <!-- Cell 4: wide — Exterior -->
+      <div class="galeria-item gal-slideshow" data-interval="5000">
+        <div class="slide active"><img src="img/exterior-1-web.jpg" alt="Exterior del lodge"></div>
+        <div class="slide"><img src="img/gal-ext-a.jpg" alt="Piscina y lodge de día"></div>
+        <div class="slide"><img src="img/gal-ext-b.jpg" alt="Vista del lodge desde balcón"></div>
+        <div class="slide-dots"></div>
       </div>
     </div>
 
     <div class="galeria-grid-full reveal" style="margin-top:3px">
-      <div class="galeria-item">
-        <img src="img/exterior-drone-web.jpg" alt="Vista aérea del lodge">
+      <!-- Cell 5: narrow — Vista aérea -->
+      <div class="galeria-item gal-slideshow" data-interval="4200">
+        <div class="slide active"><img src="img/exterior-drone-web.jpg" alt="Vista aérea del lodge"></div>
+        <div class="slide"><img src="img/gal-drone-a.jpg" alt="Vista aérea complejo"></div>
+        <div class="slide"><img src="img/gal-drone-b.jpg" alt="Vista aérea entorno selvático"></div>
+        <div class="slide-dots"></div>
       </div>
-      <div class="galeria-item">
-        <img src="img/hab-decorado-web.jpg" alt="Habitación decorada">
+      <!-- Cell 6: wide — Habitaciones -->
+      <div class="galeria-item gal-slideshow" data-interval="4800">
+        <div class="slide active"><img src="img/hab-decorado-web.jpg" alt="Habitación decorada"></div>
+        <div class="slide"><img src="img/gal-hab-a.jpg" alt="Decorado romántico con cisnes"></div>
+        <div class="slide"><img src="img/gal-hab-b.jpg" alt="Habitación matrimonial"></div>
+        <div class="slide-dots"></div>
       </div>
-      <div class="galeria-item">
-        <img src="img/vista-noche.jpg" alt="Vista nocturna">
+      <!-- Cell 7: wide — Vista nocturna -->
+      <div class="galeria-item gal-slideshow" data-interval="5200">
+        <div class="slide active"><img src="img/vista-noche.jpg" alt="Vista nocturna"></div>
+        <div class="slide"><img src="img/gal-noche-a.jpg" alt="Piscina iluminada de noche"></div>
+        <div class="slide"><img src="img/rest-noche-web.jpg" alt="Restaurante de noche"></div>
+        <div class="slide-dots"></div>
       </div>
-      <div class="galeria-item">
-        <img src="img/hero-3-web.jpg" alt="Entorno selvático">
+      <!-- Cell 8: narrow — Entorno selvático -->
+      <div class="galeria-item gal-slideshow" data-interval="4000">
+        <div class="slide active"><img src="img/hero-3-web.jpg" alt="Entorno selvático"></div>
+        <div class="slide"><img src="img/gal-nat-a.jpg" alt="Pasarelas del lodge"></div>
+        <div class="slide"><img src="img/gal-nat-b.jpg" alt="Vegetación tropical"></div>
+        <div class="slide-dots"></div>
       </div>
     </div>
 
@@ -2235,7 +2277,7 @@ document.getElementById('drawerClose').addEventListener('click', () => drawer.cl
 drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => drawer.classList.remove('open')))
 
 // ── Experience panel slideshow ──────────────────
-document.querySelectorAll('.exp-slideshow').forEach(el => {
+document.querySelectorAll('.exp-slideshow, .gal-slideshow').forEach(el => {
   const slides = Array.from(el.querySelectorAll('.slide'))
   const dotsWrap = el.querySelector('.slide-dots')
   const interval = parseInt(el.dataset.interval) || 4000
