@@ -2886,23 +2886,39 @@ if (window.LANG !== 'es') setLang(window.LANG)
 
     let reply = getOptionsIntroLabel(personas, nomCI, nomCO, noches)
     if(rec.sinAC) reply+={es:`No hay habitaciones con AC para esas fechas. Te muestro opciones con ventilador:\n\n`,en:`No A/C rooms available for those dates. Showing fan options:\n\n`,pt:`Sem quartos com AC para essas datas. Mostrando opções com ventilador:\n\n`}[_lang]
+    // Localised labels for option formatting
+    const _opLabel  = {es:'Opción',   en:'Option',  pt:'Opção'}[_lang]
+    const _fan      = {es:' (ventilador)', en:' (fan)', pt:' (ventilador)'}[_lang]
+    const _night    = {es:'/noche',   en:'/night',  pt:'/noite'}[_lang]
+    const _floor    = {es:'Piso',     en:'Floor',   pt:'Andar'}[_lang]
+    const _block    = {es:'Bloque',   en:'Block',   pt:'Bloco'}[_lang]
+    const _same     = {es:'mismo bloque',    en:'same block',       pt:'mesmo bloco'}[_lang]
+    const _diff     = {es:'bloques distintos',en:'different blocks',pt:'blocos diferentes'}[_lang]
+    const _which    = {es:'¿Cuál opción te interesa?', en:'Which option interests you?', pt:'Qual opção te interessa?'}[_lang]
+    // Translate room type string from DB (e.g. "Triple C/ Aire" → "Triple w/A/C")
+    function trTipo(tipo) {
+      if(_lang==='en') return tipo.replace(/C\/\s*Aire/gi,'w/A/C').replace(/Cuádruple/,'Quadruple').replace(/Quíntuple/,'Quintuple')
+      if(_lang==='pt') return tipo.replace(/C\/\s*Aire/gi,'c/Ar').replace(/Cuádruple/,'Quádruplo').replace(/Quíntuple/,'Quíntuplo')
+      return tipo
+    }
+
     const qrOptions = []
     if(rec.tipo==='single'){
       rec.opciones.forEach((h,i)=>{
-        const acTag=h.ac?' (AC)':' (ventilador)'
-        reply+=`Opción ${i+1}: ${h.nombre}${acTag}\n  ${h.tipo} — S/ ${h.precio}/noche\n  Total: S/ ${h.precio*noches}\n  ${h.bloque}, Piso ${h.piso}\n\n`
+        const acTag = h.ac ? ' (AC)' : _fan
+        reply+=`${_opLabel} ${i+1}: ${h.nombre}${acTag}\n  ${trTipo(h.tipo)} — S/ ${h.precio}${_night}\n  Total: S/ ${h.precio*noches}\n  ${_block} ${h.bloque.replace(/Bloque\s*/i,'')}, ${_floor} ${h.piso}\n\n`
         conv.opciones.push({ label:`${h.nombre}${acTag}`, tipo:h.tipo, nombre:h.nombre, precio:h.precio, noches, ac:h.ac, combo:false })
         qrOptions.push(getOptionsLabel(i))
       })
     } else {
       rec.opciones.forEach((o,i)=>{
         const[a,b]=o.rooms
-        reply+=`Opción ${i+1}: ${a.nombre} + ${b.nombre}\n  ${a.tipo}${a.ac?' (AC)':''} + ${b.tipo}${b.ac?' (AC)':''} — S/ ${o.precio}/noche\n  Total: S/ ${o.precio*noches} · ${o.mismoBloque?'mismo bloque':'bloques distintos'}\n\n`
+        reply+=`${_opLabel} ${i+1}: ${a.nombre} + ${b.nombre}\n  ${trTipo(a.tipo)}${a.ac?' (AC)':_fan} + ${trTipo(b.tipo)}${b.ac?' (AC)':_fan} — S/ ${o.precio}${_night}\n  Total: S/ ${o.precio*noches} · ${o.mismoBloque?_same:_diff}\n\n`
         conv.opciones.push({ label:`${a.nombre} + ${b.nombre}`, tipo:`${a.tipo} + ${b.tipo}`, nombre:`${a.nombre} + ${b.nombre}`, precio:o.precio, noches, ac:false, combo:true })
         qrOptions.push(getOptionsLabel(i))
       })
     }
-    reply+=`¿Cuál opción te interesa?`
+    reply+=_which
     return{reply, qr:[...qrOptions, getOtherDatesLabel(), getWALabel()]}
   }
 
