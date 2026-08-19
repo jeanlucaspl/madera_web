@@ -2615,6 +2615,7 @@ if (window.LANG !== 'es') setLang(window.LANG)
   const notif    = document.getElementById('chatNotif')
 
   function hora() { return new Date().toLocaleTimeString('es-PE',{hour:'2-digit',minute:'2-digit'}) }
+  function dateLocale() { const l=window.LANG||'es'; return l==='en'?'en-US':l==='pt'?'pt-BR':'es-PE' }
 
   function addMsg(role, text) {
     const div = document.createElement('div')
@@ -2695,9 +2696,12 @@ if (window.LANG !== 'es') setLang(window.LANG)
       qrWrap.innerHTML = ''
       const ciDate = new Date(ciISO + 'T12:00:00')
       const coDate = new Date(coISO + 'T12:00:00')
-      const nomCI = ciDate.toLocaleDateString('es-PE',{day:'numeric',month:'long'})
-      const nomCO = coDate.toLocaleDateString('es-PE',{day:'numeric',month:'long'})
-      addMsg('user', `${selPersonas} persona(s) — del ${nomCI} al ${nomCO}${ac?' — con AC':''}`)
+      const nomCI = ciDate.toLocaleDateString(dateLocale(),{day:'numeric',month:'long'})
+      const nomCO = coDate.toLocaleDateString(dateLocale(),{day:'numeric',month:'long'})
+      const _lg = window.LANG||'es'
+      const _sep = {es:`del ${nomCI} al ${nomCO}`, en:`${nomCI} to ${nomCO}`, pt:`de ${nomCI} a ${nomCO}`}[_lg]
+      const _ac  = {es:' — con AC', en:' — with A/C', pt:' — com AC'}[_lg]
+      addMsg('user', `${selPersonas} ${personWord(selPersonas)} — ${_sep}${ac?_ac:''}`)
       conv = { step: 'idle', personas: selPersonas, ciISO, coISO, prefAC: ac, opciones: null, noches: 0 }
       runSearch()
     })
@@ -2861,11 +2865,16 @@ if (window.LANG !== 'es') setLang(window.LANG)
     const ciDate = new Date(ciISO+'T12:00:00')
     const coDate = new Date(coISO+'T12:00:00')
     const noches = Math.round((coDate-ciDate)/(1000*60*60*24))
-    const nomCI = ciDate.toLocaleDateString('es-PE',{day:'numeric',month:'long'})
-    const nomCO = coDate.toLocaleDateString('es-PE',{day:'numeric',month:'long'})
-    const pref = prefAC ? ' (con AC)' : ''
+    const nomCI = ciDate.toLocaleDateString(dateLocale(),{day:'numeric',month:'long'})
+    const nomCO = coDate.toLocaleDateString(dateLocale(),{day:'numeric',month:'long'})
+    const _lang = window.LANG||'es'
+    const pref = prefAC ? {es:' (con AC)',en:' (with A/C)',pt:' (com AC)'}[_lang] : ''
     if(rec.tipo==='sin_opcion') return{
-      reply:`No hay habitaciones disponibles para ${personas} personas del ${nomCI} al ${nomCO}${pref}. Escríbenos al +51 975 464 923 y buscamos una solución.`,
+      reply:{
+        es:`No hay habitaciones disponibles para ${personas} personas del ${nomCI} al ${nomCO}${pref}. Escríbenos al +51 975 464 923 y buscamos una solución.`,
+        en:`No rooms available for ${personas} guest(s) from ${nomCI} to ${nomCO}${pref}. Write to us at +51 975 464 923 and we'll find a solution.`,
+        pt:`Sem quartos disponíveis para ${personas} hóspede(s) de ${nomCI} a ${nomCO}${pref}. Escreva-nos no +51 975 464 923 e encontraremos uma solução.`,
+      }[_lang],
       qr:[getOtherDatesLabel(), getWALabel()]
     }
     // Store structured options for the reservation flow
@@ -2876,7 +2885,7 @@ if (window.LANG !== 'es') setLang(window.LANG)
     conv.personas = personas
 
     let reply = getOptionsIntroLabel(personas, nomCI, nomCO, noches)
-    if(rec.sinAC) reply+=`No hay habitaciones con AC para esas fechas. Te muestro opciones con ventilador:\n\n`
+    if(rec.sinAC) reply+={es:`No hay habitaciones con AC para esas fechas. Te muestro opciones con ventilador:\n\n`,en:`No A/C rooms available for those dates. Showing fan options:\n\n`,pt:`Sem quartos com AC para essas datas. Mostrando opções com ventilador:\n\n`}[_lang]
     const qrOptions = []
     if(rec.tipo==='single'){
       rec.opciones.forEach((h,i)=>{
@@ -2902,20 +2911,42 @@ if (window.LANG !== 'es') setLang(window.LANG)
     wrap.className = 'chat-dp'
     const ciDate = new Date(conv.ciISO+'T12:00:00')
     const coDate = new Date(conv.coISO+'T12:00:00')
-    const nomCI = ciDate.toLocaleDateString('es-PE',{day:'numeric',month:'long'})
-    const nomCO = coDate.toLocaleDateString('es-PE',{day:'numeric',month:'long'})
     const lang = window.LANG || 'es'
+    const nomCI = ciDate.toLocaleDateString(dateLocale(),{day:'numeric',month:'long'})
+    const nomCO = coDate.toLocaleDateString(dateLocale(),{day:'numeric',month:'long'})
+    const dateRange = {es:`${nomCI} al ${nomCO}`, en:`${nomCI} to ${nomCO}`, pt:`${nomCI} a ${nomCO}`}[lang]
+    const totalSoles = opcion.precio * opcion.noches
+    const adelanto = Math.round(totalSoles / 2)
     const lbl = {
-      nombre: {es:'Nombre completo', en:'Full name', pt:'Nome completo'}[lang],
-      dni: {es:'DNI / CE / Pasaporte', en:'Passport / ID', pt:'Passaporte / CPF'}[lang],
-      cel: {es:'Celular de contacto', en:'Contact phone', pt:'Celular de contato'}[lang],
-      phNombre: {es:'Juan Pérez García', en:'John Smith', pt:'João Silva'}[lang],
-      phDni: {es:'12345678', en:'A1234567', pt:'12345678'}[lang],
-      phCel: {es:'987654321', en:'+1234567890', pt:'11987654321'}[lang],
+      nombre:   {es:'Nombre completo',       en:'Full name',         pt:'Nome completo'}[lang],
+      dni:      {es:'DNI / CE / Pasaporte',  en:'Passport / ID',     pt:'Passaporte / CPF'}[lang],
+      cel:      {es:'Celular de contacto',   en:'Contact phone',     pt:'Celular de contato'}[lang],
+      phNombre: {es:'Juan Pérez García',     en:'John Smith',        pt:'João Silva'}[lang],
+      phDni:    {es:'12345678',              en:'A1234567',          pt:'12345678'}[lang],
+      phCel:    {es:'987654321',             en:'+1234567890',       pt:'11987654321'}[lang],
+      waBtn:    {es:'Abrir WhatsApp y enviar', en:'Open WhatsApp and send', pt:'Abrir WhatsApp e enviar'}[lang],
+      payReady: {
+        es:`¡Listo! Toca el botón para enviar tu solicitud por WhatsApp.`,
+        en:`All set! Tap the button to send your request via WhatsApp.`,
+        pt:`Tudo certo! Toque o botão para enviar sua solicitação pelo WhatsApp.`,
+      }[lang],
+      payDeposit: {
+        es:`📋 Para confirmar la reserva se requiere un <strong>adelanto del 50% — S/ ${adelanto}</strong> (el saldo se abona el día del check-in).`,
+        en:`📋 To confirm your booking, a <strong>50% deposit — S/ ${adelanto}</strong> is required (balance due at check-in).`,
+        pt:`📋 Para confirmar a reserva, é necessário um <strong>adiantamento de 50% — S/ ${adelanto}</strong> (o saldo é pago no check-in).`,
+      }[lang],
+      payMethods: {
+        es:`💳 <strong>Formas de pago:</strong>`,
+        en:`💳 <strong>Payment methods:</strong>`,
+        pt:`💳 <strong>Formas de pagamento:</strong>`,
+      }[lang],
+      payBcpLabel:  {es:`A nombre de`,        en:`Account holder`,    pt:`Titular`}[lang],
+      payNoRefund:  {es:`⚠️ No se aceptan reembolsos ni devoluciones.`, en:`⚠️ No refunds or cancellations accepted.`, pt:`⚠️ Não são aceitos reembolsos ou devoluções.`}[lang],
+      payForeign:   {es:`🌍 ¿Eres extranjero? Escríbenos directamente para coordinar el pago.`, en:`🌍 International guest? Contact us directly to arrange payment.`, pt:`🌍 É estrangeiro? Entre em contato diretamente para coordenar o pagamento.`}[lang],
     }
     wrap.innerHTML = `
       <div style="font-weight:600;margin-bottom:4px;color:var(--forest)">${opcion.label}</div>
-      <div style="font-size:13px;color:#555;margin-bottom:12px">${nomCI} al ${nomCO} · ${opcion.noches} ${nightWord(opcion.noches)} · <strong>S/ ${opcion.precio*opcion.noches} total</strong></div>
+      <div style="font-size:13px;color:#555;margin-bottom:12px">${dateRange} · ${opcion.noches} ${nightWord(opcion.noches)} · <strong>S/ ${totalSoles} total</strong></div>
       <label>${lbl.nombre}</label>
       <input type="text" class="dp-nombre" placeholder="${lbl.phNombre}" style="width:100%;padding:8px 10px;border:1.5px solid #ddd;border-radius:8px;font-size:14px;margin-bottom:6px;outline:none">
       <label>${lbl.dni}</label>
@@ -2939,13 +2970,11 @@ if (window.LANG !== 'es') setLang(window.LANG)
     confirmBtn.addEventListener('click', () => {
       const msg = `Hola Madera Labrada, quiero reservar:\n• Habitación: ${opcion.nombre}\n• Fechas: ${nomCI} al ${nomCO} (${opcion.noches} noches)\n• Personas: ${conv.personas}\n• Total: S/ ${opcion.precio*opcion.noches}\n• Nombre: ${nombreIn.value.trim()}\n• DNI: ${dniIn.value.trim()}\n• Celular: ${celIn.value.trim()}`
       const encodedMsg = encodeURIComponent(msg)
-      const totalSoles = opcion.precio * opcion.noches
-      const adelanto = Math.round(totalSoles / 2)
       wrap.remove()
       qrWrap.innerHTML = ''
       const div = document.createElement('div')
       div.className = 'msg bot'
-      div.innerHTML = `<div class="msg-bubble">¡Listo! Toca el botón para enviar tu solicitud por WhatsApp.<br><br>📋 Para confirmar la reserva se requiere un <strong>adelanto del 50% — S/ ${adelanto}</strong> (el saldo se abona el día del check-in).<br><br>💳 <strong>Formas de pago:</strong><br>&nbsp;• <strong>Yape:</strong> <span class="copy-val">975464878</span> <button class="copy-btn" data-copy="975464878" title="Copiar">📋</button> (Madera Labrada S.A.C)<br>&nbsp;• <strong>BCP Cta:</strong> <span class="copy-val">5500387591903</span> <button class="copy-btn" data-copy="5500387591903" title="Copiar">📋</button><br>&nbsp;&nbsp;<strong>CCI:</strong> <span class="copy-val">00255010387591900325</span> <button class="copy-btn" data-copy="00255010387591900325" title="Copiar">📋</button><br>&nbsp;&nbsp;A nombre de: Madera Labrada SAC<br><br>⚠️ No se aceptan reembolsos ni devoluciones.<br><br>🌍 ¿Eres extranjero? Escríbenos directamente para coordinar el pago.<br><br><a href="https://wa.me/51975464923?text=${encodedMsg}" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#25d366;color:#fff;padding:10px 20px;border-radius:20px;font-weight:600;text-decoration:none;font-size:14px">Abrir WhatsApp y enviar</a></div><div class="msg-time">${hora()}</div>`
+      div.innerHTML = `<div class="msg-bubble">${lbl.payReady}<br><br>${lbl.payDeposit}<br><br>${lbl.payMethods}<br>&nbsp;• <strong>Yape:</strong> <span class="copy-val">975464878</span> <button class="copy-btn" data-copy="975464878" title="Copy">📋</button> (Madera Labrada S.A.C)<br>&nbsp;• <strong>BCP Cta:</strong> <span class="copy-val">5500387591903</span> <button class="copy-btn" data-copy="5500387591903" title="Copy">📋</button><br>&nbsp;&nbsp;<strong>CCI:</strong> <span class="copy-val">00255010387591900325</span> <button class="copy-btn" data-copy="00255010387591900325" title="Copy">📋</button><br>&nbsp;&nbsp;${lbl.payBcpLabel}: Madera Labrada SAC<br><br>${lbl.payNoRefund}<br><br>${lbl.payForeign}<br><br><a href="https://wa.me/51975464923?text=${encodedMsg}" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#25d366;color:#fff;padding:10px 20px;border-radius:20px;font-weight:600;text-decoration:none;font-size:14px">${lbl.waBtn}</a></div><div class="msg-time">${hora()}</div>`
       div.querySelectorAll('.copy-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           navigator.clipboard.writeText(btn.dataset.copy).then(() => {
@@ -2968,10 +2997,13 @@ if (window.LANG !== 'es') setLang(window.LANG)
     await new Promise(r=>setTimeout(r,800))
     const libres=await getDisponibles(ciISO,coISO)
     hideTyping()
-    if(!libres) return addMsg('bot','No pude consultar la disponibilidad. Escríbenos al +51 975 464 923.')
+    const _rl = window.LANG||'es'
+    if(!libres) return addMsg('bot',{es:'No pude consultar la disponibilidad. Escríbenos al +51 975 464 923.',en:'Could not check availability. Write to us at +51 975 464 923.',pt:'Não foi possível verificar disponibilidade. Escreva para +51 975 464 923.'}[_rl])
     if(libres.length===0){
       const ciDate=new Date(ciISO+'T12:00:00'),coDate=new Date(coISO+'T12:00:00')
-      return addMsg('bot',`No hay disponibilidad del ${ciDate.toLocaleDateString('es-PE',{day:'numeric',month:'long'})} al ${coDate.toLocaleDateString('es-PE',{day:'numeric',month:'long'})}. ¿Quieres probar otras fechas?`)
+      const d1=ciDate.toLocaleDateString(dateLocale(),{day:'numeric',month:'long'})
+      const d2=coDate.toLocaleDateString(dateLocale(),{day:'numeric',month:'long'})
+      return addMsg('bot',{es:`No hay disponibilidad del ${d1} al ${d2}. ¿Quieres probar otras fechas?`,en:`No availability from ${d1} to ${d2}. Would you like to try other dates?`,pt:`Sem disponibilidade de ${d1} a ${d2}. Quer tentar outras datas?`}[_rl])
     }
     const rec=recomendar(libres,personas,prefAC)
     const{reply,qr}=formatResult(rec,personas,ciISO,coISO,prefAC)
