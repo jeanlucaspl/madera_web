@@ -2603,6 +2603,8 @@ if (window.LANG !== 'es') setLang(window.LANG)
   }
 
   let conv = { step: 'idle', personas: null, ciISO: null, coISO: null, prefAC: false, opciones: null, noches: 0 }
+  const WORKER_URL = 'https://madera-labrada-chat.jeanlucaspl-2015.workers.dev'
+  let chatHistory = []
   let isOpen = false, isTyping = false
 
   const btn      = document.getElementById('chat-btn')
@@ -3068,7 +3070,7 @@ if (window.LANG !== 'es') setLang(window.LANG)
       reservar: [QUICK_INIT[0], getWALabel(), QUICK_INIT[3]],
     }
     if(intent&&R[intent]) return{reply:R[intent],qr:qrMap[intent]||QUICK_INIT}
-    return{reply:R.fallback,qr:QUICK_INIT}
+    return null  // intent desconocido → Gemini
   }
 
   async function sendMessage(text) {
@@ -3114,7 +3116,30 @@ if (window.LANG !== 'es') setLang(window.LANG)
     showTyping()
     const[result]=await Promise.all([procesar(text),new Promise(r=>setTimeout(r,500))])
     hideTyping()
-    if(result){addMsg('bot',result.reply);if(result.qr?.length)showQR(result.qr)}
+    if(result) {
+      addMsg('bot', result.reply)
+      chatHistory.push({role:'user',content:text},{role:'assistant',content:result.reply})
+      if(result.qr?.length) showQR(result.qr)
+    } else {
+      // Pregunta libre → Gemini Worker
+      showTyping()
+      try {
+        const resp = await fetch(WORKER_URL, {
+          method: 'POST',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({ message: text, history: chatHistory.slice(-10) })
+        })
+        const data = await resp.json()
+        const reply = data.reply || t('chat.fallback')
+        hideTyping()
+        addMsg('bot', reply)
+        chatHistory.push({role:'user',content:text},{role:'assistant',content:reply})
+      } catch(e) {
+        hideTyping()
+        addMsg('bot', t('chat.fallback'))
+      }
+      showQR(getQUICK_INIT())
+    }
     sendBtn.disabled=false; input.focus()
   }
 
@@ -3156,6 +3181,7 @@ if (window.LANG !== 'es') setLang(window.LANG)
     messages.innerHTML = ''
     qrWrap.innerHTML = ''
     conv = { step: 'idle', personas: null, ciISO: null, coISO: null, prefAC: false, opciones: null, noches: 0 }
+    chatHistory = []
     if (isOpen) setTimeout(() => { addMsg('bot', getBIENVENIDA()); showQR(getQUICK_INIT()) }, 80)
     input.placeholder = t('chat.placeholder')
     const statusEl = document.querySelector('.chat-header-status [data-i18n="chat.status"]')
