@@ -3052,7 +3052,7 @@ if (window.LANG !== 'es') setLang(window.LANG)
         conv={step:'idle',personas,ciISO,coISO,prefAC}
         return null
       }
-      addMsg('bot','Selecciona las fechas y número de personas:')
+      addMsg('bot',{es:'Selecciona las fechas y número de personas:',en:'Select your dates and number of guests:',pt:'Selecione as datas e número de hóspedes:'}[window.LANG||'es'])
       showDatePicker(personas, prefAC)
       return null
     }
@@ -3092,7 +3092,7 @@ if (window.LANG !== 'es') setLang(window.LANG)
       const idx = parseInt(opcionMatch[1]||opcionMatch[2]||opcionMatch[3]) - 1
       const opcion = conv.opciones[idx]
       if(opcion) {
-        addMsg('bot','¡Excelente elección! Completa tus datos para finalizar la reserva:')
+        addMsg('bot',{es:'¡Excelente elección! Completa tus datos para finalizar la reserva:',en:'Great choice! Fill in your details to complete the booking:',pt:'Ótima escolha! Preencha seus dados para finalizar a reserva:'}[window.LANG||'es'])
         showReservaForm(opcion)
         sendBtn.disabled=false; input.focus(); return
       }
