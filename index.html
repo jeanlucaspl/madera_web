@@ -2879,14 +2879,14 @@ if (window.LANG !== 'es') setLang(window.LANG)
     if(rec.tipo==='single'){
       rec.opciones.forEach((h,i)=>{
         const acTag=h.ac?' (AC)':' (ventilador)'
-        reply+=`Opción ${i+1}: ${h.nombre}${acTag}\n  ${h.tipo} — S/ ${h.precio}/noche · S/ ${h.precio*noches} total\n  ${h.bloque}, Piso ${h.piso}\n\n`
+        reply+=`Opción ${i+1}: ${h.nombre}${acTag}\n  ${h.tipo} — S/ ${h.precio}/noche\n  Total: S/ ${h.precio*noches}\n  ${h.bloque}, Piso ${h.piso}\n\n`
         conv.opciones.push({ label:`${h.nombre}${acTag}`, tipo:h.tipo, nombre:h.nombre, precio:h.precio, noches, ac:h.ac, combo:false })
         qrOptions.push(getOptionsLabel(i))
       })
     } else {
       rec.opciones.forEach((o,i)=>{
         const[a,b]=o.rooms
-        reply+=`Opción ${i+1}: ${a.nombre} + ${b.nombre}\n  ${a.tipo}${a.ac?' (AC)':''} + ${b.tipo}${b.ac?' (AC)':''}\n  S/ ${o.precio}/noche · S/ ${o.precio*noches} total — ${o.mismoBloque?'mismo bloque':'bloques distintos'}\n\n`
+        reply+=`Opción ${i+1}: ${a.nombre} + ${b.nombre}\n  ${a.tipo}${a.ac?' (AC)':''} + ${b.tipo}${b.ac?' (AC)':''} — S/ ${o.precio}/noche\n  Total: S/ ${o.precio*noches} · ${o.mismoBloque?'mismo bloque':'bloques distintos'}\n\n`
         conv.opciones.push({ label:`${a.nombre} + ${b.nombre}`, tipo:`${a.tipo} + ${b.tipo}`, nombre:`${a.nombre} + ${b.nombre}`, precio:o.precio, noches, ac:false, combo:true })
         qrOptions.push(getOptionsLabel(i))
       })
@@ -2936,13 +2936,14 @@ if (window.LANG !== 'es') setLang(window.LANG)
     celIn.addEventListener('input', validateForm)
     confirmBtn.addEventListener('click', () => {
       const msg = `Hola Madera Labrada, quiero reservar:\n• Habitación: ${opcion.nombre}\n• Fechas: ${nomCI} al ${nomCO} (${opcion.noches} noches)\n• Personas: ${conv.personas}\n• Total: S/ ${opcion.precio*opcion.noches}\n• Nombre: ${nombreIn.value.trim()}\n• DNI: ${dniIn.value.trim()}\n• Celular: ${celIn.value.trim()}`
+      const encodedMsg = encodeURIComponent(msg)
+      const totalSoles = opcion.precio * opcion.noches
+      const adelanto = Math.round(totalSoles / 2)
       wrap.remove()
       qrWrap.innerHTML = ''
-      addMsg('user', `Solicitud de reserva enviada`)
-      const encodedMsg = encodeURIComponent(msg)
       const div = document.createElement('div')
       div.className = 'msg bot'
-      div.innerHTML = `<div class="msg-bubble">¡Perfecto! Tu solicitud está lista. Toca el botón para enviarla por WhatsApp y nuestro equipo confirmará en minutos.<br><br><a href="https://wa.me/51975464923?text=${encodedMsg}" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#25d366;color:#fff;padding:10px 20px;border-radius:20px;font-weight:600;text-decoration:none;font-size:14px">Abrir WhatsApp y enviar</a></div><div class="msg-time">${hora()}</div>`
+      div.innerHTML = `<div class="msg-bubble">¡Listo! Toca el botón para enviar tu solicitud por WhatsApp.<br><br>📋 Para confirmar la reserva se requiere un <strong>adelanto del 50% — S/ ${adelanto}</strong>.<br><br>💳 <strong>Formas de pago:</strong><br>&nbsp;• Yape / Plin: <strong>975 464 923</strong><br>&nbsp;• Transferencia bancaria (te indicamos la cuenta por WhatsApp)<br><br>🌍 ¿Eres extranjero? Contáctanos directamente para coordinar el pago internacional.<br><br><a href="https://wa.me/51975464923?text=${encodedMsg}" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#25d366;color:#fff;padding:10px 20px;border-radius:20px;font-weight:600;text-decoration:none;font-size:14px">Abrir WhatsApp y enviar</a></div><div class="msg-time">${hora()}</div>`
       messages.appendChild(div)
       messages.scrollTop = messages.scrollHeight
       conv.opciones = null
