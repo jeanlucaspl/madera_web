@@ -3070,7 +3070,7 @@ if (window.LANG !== 'es') setLang(window.LANG)
       reservar: [QUICK_INIT[0], getWALabel(), QUICK_INIT[3]],
     }
     if(intent&&R[intent]) return{reply:R[intent],qr:qrMap[intent]||QUICK_INIT}
-    return null  // intent desconocido → Gemini
+    return{reply:R.fallback, qr:QUICK_INIT, tryGemini:true}
   }
 
   async function sendMessage(text) {
@@ -3116,29 +3116,29 @@ if (window.LANG !== 'es') setLang(window.LANG)
     showTyping()
     const[result]=await Promise.all([procesar(text),new Promise(r=>setTimeout(r,500))])
     hideTyping()
-    if(result) {
+    if(result && !result.tryGemini) {
       addMsg('bot', result.reply)
       chatHistory.push({role:'user',content:text},{role:'assistant',content:result.reply})
       if(result.qr?.length) showQR(result.qr)
     } else {
-      // Pregunta libre → Gemini Worker
+      // Pregunta libre → intentar Gemini, fallback a rule-based si falla
       showTyping()
+      let reply = result?.reply || t('chat.fallback')  // fallback por defecto
       try {
         const resp = await fetch(WORKER_URL, {
           method: 'POST',
           headers: {'Content-Type':'application/json'},
           body: JSON.stringify({ message: text, history: chatHistory.slice(-10) })
         })
-        const data = await resp.json()
-        const reply = data.reply || t('chat.fallback')
-        hideTyping()
-        addMsg('bot', reply)
-        chatHistory.push({role:'user',content:text},{role:'assistant',content:reply})
-      } catch(e) {
-        hideTyping()
-        addMsg('bot', t('chat.fallback'))
-      }
-      showQR(getQUICK_INIT())
+        if(resp.ok) {
+          const data = await resp.json()
+          if(data.reply) reply = data.reply
+        }
+      } catch(e) { /* sin créditos o sin red → usa fallback rule-based */ }
+      hideTyping()
+      addMsg('bot', reply)
+      chatHistory.push({role:'user',content:text},{role:'assistant',content:reply})
+      showQR(result?.qr?.length ? result.qr : getQUICK_INIT())
     }
     sendBtn.disabled=false; input.focus()
   }
