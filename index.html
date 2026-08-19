@@ -1491,6 +1491,7 @@ footer {
 }
 .lang-btn:hover { color: rgba(250,250,248,0.85); }
 .lang-btn.active { color: var(--oro); border-color: rgba(201,169,110,0.4); }
+@media (max-width: 768px) { .lang-switcher { display: none; } }
 /* Mobile drawer lang */
 .drawer-lang {
   display: flex;
@@ -2382,6 +2383,7 @@ function setLang(lang) {
   document.querySelectorAll('[data-i18n-html]').forEach(el => { el.innerHTML = t(el.dataset.i18nHtml) })
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { el.placeholder = t(el.dataset.i18nPlaceholder) })
   document.querySelectorAll('[data-lang]').forEach(btn => { btn.classList.toggle('active', btn.dataset.lang === lang) })
+  if (typeof window.resetChatLang === 'function') window.resetChatLang()
 }
 
 document.querySelectorAll('[data-lang]').forEach(btn => {
@@ -2962,6 +2964,29 @@ if (window.LANG !== 'es') setLang(window.LANG)
     chatBtnEl.addEventListener('mouseenter', () => chatHint.classList.add('visible'))
     chatBtnEl.addEventListener('mouseleave', () => setTimeout(() => chatHint.classList.remove('visible'), 300))
     chatBtnEl.addEventListener('click', () => chatHint.classList.remove('visible'))
+  }
+
+  // Expose language reset so setLang() can update the chatbot in real time
+  window.resetChatLang = function() {
+    // Clear rendered messages and reset conversation state
+    messages.innerHTML = ''
+    qrWrap.innerHTML = ''
+    conv = { step: 'idle', personas: null, ciISO: null, coISO: null, prefAC: false, opciones: null, noches: 0 }
+    // If chat is open, show welcome in new language immediately
+    if (isOpen) {
+      setTimeout(() => { addMsg('bot', getBIENVENIDA()); showQR(getQUICK_INIT()) }, 80)
+    }
+    // Update chat hint text (already handled by data-i18n, but ensure it)
+    const hintTitle = document.querySelector('#chatHint [data-i18n="chat.hint.title"]')
+    const hintSub   = document.querySelector('#chatHint [data-i18n="chat.hint.sub"]')
+    if (hintTitle) hintTitle.textContent = t('chat.hint.title')
+    if (hintSub)   hintSub.textContent   = t('chat.hint.sub')
+    // Update chat header status
+    const statusEl = document.querySelector('.chat-header-status [data-i18n="chat.status"]')
+    if (statusEl) statusEl.textContent = t('chat.status')
+    // Update textarea placeholder
+    const inp = document.getElementById('chat-input')
+    if (inp) inp.placeholder = t('chat.placeholder')
   }
 
 })()
