@@ -1467,6 +1467,49 @@ footer {
 @media (max-width: 768px) {
   .chat-hint { right: 14px; bottom: 140px; max-width: 180px; font-size: 12px; }
 }
+
+/* ── LANGUAGE SWITCHER ──────────────────────────── */
+.lang-switcher {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: 12px;
+}
+.lang-btn {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: rgba(250,250,248,0.5);
+  padding: 4px 7px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  background: none;
+  font-family: var(--sans);
+}
+.lang-btn:hover { color: rgba(250,250,248,0.85); }
+.lang-btn.active { color: var(--oro); border-color: rgba(201,169,110,0.4); }
+/* Mobile drawer lang */
+.drawer-lang {
+  display: flex;
+  gap: 8px;
+  margin-top: -8px;
+}
+.drawer-lang button {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(250,250,248,0.5);
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 6px 14px;
+  cursor: pointer;
+  font-family: var(--sans);
+  transition: all 0.2s;
+}
+.drawer-lang button.active { color: var(--oro); border-color: rgba(201,169,110,0.4); }
 </style>
 </head>
 <body>
@@ -1484,13 +1527,18 @@ footer {
       </div>
     </a>
     <ul class="nav-links">
-      <li><a href="#habitaciones">Habitaciones</a></li>
-      <li><a href="#experiencias">Experiencias</a></li>
-      <li><a href="#paquetes">Paquetes</a></li>
-      <li><a href="#galeria">Galería</a></li>
-      <li><a href="#contacto">Contacto</a></li>
+      <li><a href="#habitaciones" data-i18n="nav.rooms">Habitaciones</a></li>
+      <li><a href="#experiencias" data-i18n="nav.experiences">Experiencias</a></li>
+      <li><a href="#paquetes" data-i18n="nav.packages">Paquetes</a></li>
+      <li><a href="#galeria" data-i18n="nav.gallery">Galería</a></li>
+      <li><a href="#contacto" data-i18n="nav.contact">Contacto</a></li>
     </ul>
-    <a href="#contacto" class="nav-cta">Reservar</a>
+    <a href="#contacto" class="nav-cta" data-i18n="nav.book">Reservar</a>
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="es">ES</button>
+      <button class="lang-btn" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="pt">PT</button>
+    </div>
     <button class="nav-hamburger" id="navHamburger" aria-label="Abrir menú">
       <span></span><span></span><span></span>
     </button>
@@ -1500,12 +1548,17 @@ footer {
 <!-- Mobile Drawer -->
 <div class="nav-drawer" id="navDrawer">
   <button class="drawer-close" id="drawerClose" aria-label="Cerrar menú">&times;</button>
-  <a href="#habitaciones" class="drawer-link">Habitaciones</a>
-  <a href="#experiencias" class="drawer-link">Experiencias</a>
-  <a href="#paquetes" class="drawer-link">Paquetes</a>
-  <a href="#galeria" class="drawer-link">Galería</a>
-  <a href="#contacto" class="drawer-link">Contacto</a>
-  <a href="#contacto" class="drawer-link drawer-cta">Reservar ahora</a>
+  <a href="#habitaciones" class="drawer-link" data-i18n="nav.rooms">Habitaciones</a>
+  <a href="#experiencias" class="drawer-link" data-i18n="nav.experiences">Experiencias</a>
+  <a href="#paquetes" class="drawer-link" data-i18n="nav.packages">Paquetes</a>
+  <a href="#galeria" class="drawer-link" data-i18n="nav.gallery">Galería</a>
+  <a href="#contacto" class="drawer-link" data-i18n="nav.contact">Contacto</a>
+  <a href="#contacto" class="drawer-link drawer-cta" data-i18n="nav.bookNow">Reservar ahora</a>
+  <div class="drawer-lang">
+    <button data-lang="es" class="active">ES</button>
+    <button data-lang="en">EN</button>
+    <button data-lang="pt">PT</button>
+  </div>
 </div>
 
 <!-- ══════════════════════════════════
@@ -1519,14 +1572,14 @@ footer {
   </div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <p class="hero-eyebrow">Tarapoto &middot; San Martín &middot; Perú</p>
-    <h1 class="hero-h1">Donde la selva<br>es tu hogar</h1>
-    <p class="hero-sub">Lodge ecológico a 5 minutos del centro de Tarapoto</p>
-    <a href="#" class="hero-btn" id="heroReservarBtn">Consultar disponibilidad</a>
+    <p class="hero-eyebrow" data-i18n="hero.eyebrow">Tarapoto &middot; San Martín &middot; Perú</p>
+    <h1 class="hero-h1" data-i18n-html="hero.h1">Donde la selva<br>es tu hogar</h1>
+    <p class="hero-sub" data-i18n="hero.sub">Lodge ecológico a 5 minutos del centro de Tarapoto</p>
+    <a href="#" class="hero-btn" id="heroReservarBtn" data-i18n="hero.cta">Consultar disponibilidad</a>
   </div>
   <div class="hero-scroll">
     <div class="hero-scroll-line"></div>
-    <span class="hero-scroll-text">Descubrir</span>
+    <span class="hero-scroll-text" data-i18n="hero.scroll">Descubrir</span>
   </div>
 </section>
 
@@ -1537,19 +1590,19 @@ footer {
   <div class="numeros-grid reveal">
     <div class="numero-item">
       <div class="numero-val" data-count="84">0</div>
-      <div class="numero-label">Habitaciones</div>
+      <div class="numero-label" data-i18n="stats.rooms">Habitaciones</div>
     </div>
     <div class="numero-item">
       <div class="numero-val" data-count="5">0</div>
-      <div class="numero-label">Min del centro</div>
+      <div class="numero-label" data-i18n="stats.min">Min del centro</div>
     </div>
     <div class="numero-item">
       <div class="numero-val" data-prefix="S/ " data-count="90">S/ 0</div>
-      <div class="numero-label">Por noche</div>
+      <div class="numero-label" data-i18n="stats.night">Por noche</div>
     </div>
     <div class="numero-item">
       <div class="numero-val" data-count="14">0</div>
-      <div class="numero-label">Hab. con A/C</div>
+      <div class="numero-label" data-i18n="stats.ac">Hab. con A/C</div>
     </div>
   </div>
 </section>
@@ -1561,10 +1614,10 @@ footer {
   <div class="wrap">
     <div class="hab-header reveal">
       <div class="hab-header-left">
-        <p class="section-eyebrow">Acomodo</p>
-        <h2 class="section-title">Nuestras<br><em>habitaciones</em></h2>
+        <p class="section-eyebrow" data-i18n="rooms.eyebrow">Acomodo</p>
+        <h2 class="section-title" data-i18n-html="rooms.title">Nuestras<br><em>habitaciones</em></h2>
       </div>
-      <div class="hab-header-right">
+      <div class="hab-header-right" data-i18n="rooms.desc">
         84 habitaciones distribuidas en dos bloques. Cada una con baño privado, TV LED y hamacas en balcón frente a la selva.
       </div>
     </div>
@@ -1576,11 +1629,11 @@ footer {
           <div class="hab-card">
             <img src="img/hab-matrimonial-web.jpg" alt="Habitación Matrimonial">
             <div class="hab-overlay">
-              <div class="hab-tipo">Habitación</div>
+              <div class="hab-tipo" data-i18n="rooms.room">Habitación</div>
               <div class="hab-nombre">Matrimonial</div>
               <div class="hab-meta">
-                <div class="hab-precio">S/ 170 <span>/ noche</span></div>
-                <div class="hab-cap">2 personas</div>
+                <div class="hab-precio">S/ 170 <span data-i18n="rooms.night">/ noche</span></div>
+                <div class="hab-cap" data-i18n="rooms.persons2">2 personas</div>
               </div>
             </div>
           </div>
@@ -1590,11 +1643,11 @@ footer {
           <div class="hab-card">
             <img src="img/hab-doble-web.jpg" alt="Habitación Doble">
             <div class="hab-overlay">
-              <div class="hab-tipo">Habitación</div>
+              <div class="hab-tipo" data-i18n="rooms.room">Habitación</div>
               <div class="hab-nombre">Doble</div>
               <div class="hab-meta">
-                <div class="hab-precio">S/ 170 <span>/ noche</span></div>
-                <div class="hab-cap">2 personas</div>
+                <div class="hab-precio">S/ 170 <span data-i18n="rooms.night">/ noche</span></div>
+                <div class="hab-cap" data-i18n="rooms.persons2">2 personas</div>
               </div>
             </div>
           </div>
@@ -1604,11 +1657,11 @@ footer {
           <div class="hab-card">
             <img src="img/hab-triple-web.jpg" alt="Habitación Triple">
             <div class="hab-overlay">
-              <div class="hab-tipo">Habitación</div>
+              <div class="hab-tipo" data-i18n="rooms.room">Habitación</div>
               <div class="hab-nombre">Triple</div>
               <div class="hab-meta">
-                <div class="hab-precio">S/ 230 <span>/ noche</span></div>
-                <div class="hab-cap">3 personas</div>
+                <div class="hab-precio">S/ 230 <span data-i18n="rooms.night">/ noche</span></div>
+                <div class="hab-cap" data-i18n="rooms.persons3">3 personas</div>
               </div>
             </div>
           </div>
@@ -1618,11 +1671,11 @@ footer {
           <div class="hab-card">
             <img src="img/hab-cuadruple-web.jpg" alt="Habitación Cuádruple">
             <div class="hab-overlay">
-              <div class="hab-tipo">Habitación</div>
+              <div class="hab-tipo" data-i18n="rooms.room">Habitación</div>
               <div class="hab-nombre">Cuádruple</div>
               <div class="hab-meta">
-                <div class="hab-precio">S/ 270 <span>/ noche</span></div>
-                <div class="hab-cap">4 personas</div>
+                <div class="hab-precio">S/ 270 <span data-i18n="rooms.night">/ noche</span></div>
+                <div class="hab-cap" data-i18n="rooms.persons4">4 personas</div>
               </div>
             </div>
           </div>
@@ -1632,11 +1685,11 @@ footer {
           <div class="hab-card">
             <img src="img/hab-decorado-web.jpg" alt="Habitación Decorada">
             <div class="hab-overlay">
-              <div class="hab-tipo">Habitación especial</div>
+              <div class="hab-tipo" data-i18n="rooms.roomSpecial">Habitación especial</div>
               <div class="hab-nombre">Decorada</div>
               <div class="hab-meta">
-                <div class="hab-precio">S/ 170 <span>/ noche</span></div>
-                <div class="hab-cap">2 personas</div>
+                <div class="hab-precio">S/ 170 <span data-i18n="rooms.night">/ noche</span></div>
+                <div class="hab-cap" data-i18n="rooms.persons2">2 personas</div>
               </div>
             </div>
           </div>
@@ -1647,8 +1700,8 @@ footer {
     </div>
 
     <div class="hab-note reveal">
-      <span>14 habitaciones con <strong>aire acondicionado</strong> disponibles — tarifa con A/C desde <strong>S/ 130 / noche</strong> (+S/ 40 sobre tarifa base)</span>
-      <button class="hab-note-cta" id="habAcBtn">Consultar hab. con A/C</button>
+      <span data-i18n-html="rooms.note">14 habitaciones con <strong>aire acondicionado</strong> disponibles — tarifa con A/C desde <strong>S/ 130 / noche</strong> (+S/ 40 sobre tarifa base)</span>
+      <button class="hab-note-cta" id="habAcBtn" data-i18n="rooms.acBtn">Consultar hab. con A/C</button>
     </div>
   </div>
 </section>
@@ -1664,12 +1717,12 @@ footer {
       <img src="img/piscina-1-web.jpg" alt="Piscina selvática Madera Labrada">
     </div>
     <div class="exp-text reveal">
-      <p class="section-eyebrow">Instalaciones</p>
-      <h2 class="section-title">La <em>piscina</em></h2>
-      <p class="section-sub" style="color:rgba(245,240,232,0.72)">
+      <p class="section-eyebrow" data-i18n="pool.eyebrow">Instalaciones</p>
+      <h2 class="section-title" data-i18n-html="pool.title">La <em>piscina</em></h2>
+      <p class="section-sub" style="color:rgba(245,240,232,0.72)" data-i18n="pool.sub">
         Rodéate de naturaleza amazónica. Nuestra piscina selvática está diseñada para el descanso y la conexión con el entorno natural de San Martín.
       </p>
-      <p class="exp-detail">
+      <p class="exp-detail" data-i18n="pool.detail">
         Incluida en todas las reservas. Abierta todos los días de 7:00 am a 9:00 pm.
         Vista panorámica a la vegetación selvática. Zona de hamacas y tumbonas.
       </p>
@@ -1682,12 +1735,12 @@ footer {
       <img src="img/restaurante-1-web.jpg" alt="Restaurante Los Tukos">
     </div>
     <div class="exp-text reveal">
-      <p class="section-eyebrow">Gastronomía</p>
-      <h2 class="section-title" style="color:var(--verde)">Restaurante<br><em>Los Tukos</em></h2>
-      <p class="section-sub">
+      <p class="section-eyebrow" data-i18n="rest.eyebrow">Gastronomía</p>
+      <h2 class="section-title" style="color:var(--verde)" data-i18n-html="rest.title">Restaurante<br><em>Los Tukos</em></h2>
+      <p class="section-sub" data-i18n="rest.sub">
         Cocina amazónica auténtica con ingredientes locales de San Martín. Desayuno buffet continental incluido en tu estadía.
       </p>
-      <p class="exp-detail" style="color:var(--negro)">
+      <p class="exp-detail" style="color:var(--negro)" data-i18n="rest.detail">
         Abierto para desayuno, almuerzo y cena. Especialidades amazónicas: juane, tacacho, cecina y pescados de río.
         Vista al jardín selvático.
       </p>
@@ -1702,57 +1755,57 @@ footer {
 <section id="paquetes">
   <div class="wrap">
     <div class="paquetes-header reveal">
-      <p class="section-eyebrow">Ofertas exclusivas</p>
-      <h2 class="section-title">Paquetes <em>especiales</em></h2>
-      <p class="section-sub">Reserva directa &middot; Mejor precio garantizado</p>
+      <p class="section-eyebrow" data-i18n="pkg.eyebrow">Ofertas exclusivas</p>
+      <h2 class="section-title" data-i18n-html="pkg.title">Paquetes <em>especiales</em></h2>
+      <p class="section-sub" data-i18n="pkg.sub">Reserva directa &middot; Mejor precio garantizado</p>
     </div>
 
     <div class="paquetes-grid reveal">
 
       <!-- Card A: Romántico -->
       <div class="paquete-card paquete-card-a">
-        <div class="paquete-badge">Más popular</div>
-        <div class="paquete-nombre">Romántico Selva</div>
+        <div class="paquete-badge" data-i18n="pkg.badge1">Más popular</div>
+        <div class="paquete-nombre" data-i18n="pkg.name1">Romántico Selva</div>
         <div class="paquete-precio"><sup>S/</sup>380</div>
         <ul class="paquete-features">
-          <li>2 noches en habitación matrimonial</li>
-          <li>Desayuno buffet para 2 personas</li>
-          <li>Cena privada en balcón</li>
-          <li>Decoración especial del cuarto</li>
-          <li>Bebida de bienvenida</li>
-          <li>Piscina libre</li>
+          <li data-i18n="pkg.f1a">2 noches en habitación matrimonial</li>
+          <li data-i18n="pkg.f1b">Desayuno buffet para 2 personas</li>
+          <li data-i18n="pkg.f1c">Cena privada en balcón</li>
+          <li data-i18n="pkg.f1d">Decoración especial del cuarto</li>
+          <li data-i18n="pkg.f1e">Bebida de bienvenida</li>
+          <li data-i18n="pkg.f1f">Piscina libre</li>
         </ul>
-        <button class="paquete-btn" onclick="document.getElementById('chat-btn').click()">Consultar</button>
+        <button class="paquete-btn" data-i18n="pkg.btn" onclick="document.getElementById('chat-btn').click()">Consultar</button>
       </div>
 
       <!-- Card B: Familia -->
       <div class="paquete-card paquete-card-b">
-        <div class="paquete-badge">Familiar</div>
-        <div class="paquete-nombre">Familia Amazónica</div>
+        <div class="paquete-badge" data-i18n="pkg.badge2">Familiar</div>
+        <div class="paquete-nombre" data-i18n="pkg.name2">Familia Amazónica</div>
         <div class="paquete-precio"><sup>S/</sup>750</div>
         <ul class="paquete-features">
-          <li>3 noches en habitación familiar</li>
-          <li>Desayunos incluidos</li>
-          <li>Tour Catarata Ahuashiyacu</li>
-          <li>Tour Ciudad de Lamas</li>
-          <li>Piscina libre todo el día</li>
+          <li data-i18n="pkg.f2a">3 noches en habitación familiar</li>
+          <li data-i18n="pkg.f2b">Desayunos incluidos</li>
+          <li data-i18n="pkg.f2c">Tour Catarata Ahuashiyacu</li>
+          <li data-i18n="pkg.f2d">Tour Ciudad de Lamas</li>
+          <li data-i18n="pkg.f2e">Piscina libre todo el día</li>
         </ul>
-        <button class="paquete-btn" onclick="document.getElementById('chat-btn').click()">Consultar</button>
+        <button class="paquete-btn" data-i18n="pkg.btn" onclick="document.getElementById('chat-btn').click()">Consultar</button>
       </div>
 
       <!-- Card C: Wellness -->
       <div class="paquete-card paquete-card-c">
-        <div class="paquete-badge">Bienestar</div>
-        <div class="paquete-nombre">Retiro Wellness</div>
+        <div class="paquete-badge" data-i18n="pkg.badge3">Bienestar</div>
+        <div class="paquete-nombre" data-i18n="pkg.name3">Retiro Wellness</div>
         <div class="paquete-precio"><sup>S/</sup>420</div>
         <ul class="paquete-features">
-          <li>2 noches en habitación doble</li>
-          <li>Desayuno saludable</li>
-          <li>Tarde en piscina</li>
-          <li>Cena amazónica</li>
-          <li>Cóctel de bienvenida</li>
+          <li data-i18n="pkg.f3a">2 noches en habitación doble</li>
+          <li data-i18n="pkg.f3b">Desayuno saludable</li>
+          <li data-i18n="pkg.f3c">Tarde en piscina</li>
+          <li data-i18n="pkg.f3d">Cena amazónica</li>
+          <li data-i18n="pkg.f3e">Cóctel de bienvenida</li>
         </ul>
-        <button class="paquete-btn" onclick="document.getElementById('chat-btn').click()">Consultar</button>
+        <button class="paquete-btn" data-i18n="pkg.btn" onclick="document.getElementById('chat-btn').click()">Consultar</button>
       </div>
 
     </div>
@@ -1766,10 +1819,10 @@ footer {
   <div class="wrap">
     <div class="galeria-header reveal">
       <div>
-        <p class="section-eyebrow">Fotografía</p>
-        <h2 class="section-title" style="color:var(--blanco)">El <em style="color:var(--oro)">lodge</em></h2>
+        <p class="section-eyebrow" data-i18n="gal.eyebrow">Fotografía</p>
+        <h2 class="section-title" style="color:var(--blanco)" data-i18n-html="gal.title">El <em style="color:var(--oro)">lodge</em></h2>
       </div>
-      <div class="galeria-header-right">
+      <div class="galeria-header-right" data-i18n="gal.desc">
         Madera Labrada Lodge en el corazón de la selva de San Martín.
       </div>
     </div>
@@ -1813,9 +1866,9 @@ footer {
 <section id="tours">
   <div class="wrap">
     <div class="tours-header reveal">
-      <p class="section-eyebrow">Actividades</p>
-      <h2 class="section-title">Aventura desde <em>el lodge</em></h2>
-      <p class="section-sub">Tours sin intermediarios. Organizados directamente por el lodge para garantizar la mejor experiencia y precio.</p>
+      <p class="section-eyebrow" data-i18n="tour.eyebrow">Actividades</p>
+      <h2 class="section-title" data-i18n-html="tour.title">Aventura desde <em>el lodge</em></h2>
+      <p class="section-sub" data-i18n="tour.sub">Tours sin intermediarios. Organizados directamente por el lodge para garantizar la mejor experiencia y precio.</p>
     </div>
 
     <div class="tours-grid">
@@ -1824,10 +1877,10 @@ footer {
         <div class="tour-icon">
           <svg viewBox="0 0 24 24"><path d="M12 2L2 19h20L12 2z"/><path d="M12 9v5"/><circle cx="12" cy="17" r="1" fill="currentColor" stroke="none"/></svg>
         </div>
-        <div class="tour-nombre">Catarata Ahuashiyacu</div>
-        <div class="tour-desc">La catarata más emblemática de Tarapoto. Caída de 40 metros en plena selva, accesible por sendero sombreado.</div>
+        <div class="tour-nombre" data-i18n="tour.1.nombre">Catarata Ahuashiyacu</div>
+        <div class="tour-desc" data-i18n="tour.1.desc">La catarata más emblemática de Tarapoto. Caída de 40 metros en plena selva, accesible por sendero sombreado.</div>
         <div class="tour-meta">
-          <span class="tour-dur">Medio día</span>
+          <span class="tour-dur" data-i18n="tour.1.dur">Medio día</span>
           <span class="tour-precio">S/ 45</span>
         </div>
       </div>
@@ -1836,10 +1889,10 @@ footer {
         <div class="tour-icon">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/><path d="M18 3l3 3-3 3"/></svg>
         </div>
-        <div class="tour-nombre">Ciudad de Lamas</div>
-        <div class="tour-desc">Pueblo andino-amazónico a 22 km de Tarapoto. Cultura Lamas, vistas panorámicas del valle y artesanía local.</div>
+        <div class="tour-nombre" data-i18n="tour.2.nombre">Ciudad de Lamas</div>
+        <div class="tour-desc" data-i18n="tour.2.desc">Pueblo andino-amazónico a 22 km de Tarapoto. Cultura Lamas, vistas panorámicas del valle y artesanía local.</div>
         <div class="tour-meta">
-          <span class="tour-dur">Medio día</span>
+          <span class="tour-dur" data-i18n="tour.2.dur">Medio día</span>
           <span class="tour-precio">S/ 55</span>
         </div>
       </div>
@@ -1848,10 +1901,10 @@ footer {
         <div class="tour-icon">
           <svg viewBox="0 0 24 24"><path d="M3 12s3-7 9-7 9 7 9 7-3 7-9 7-9-7-9-7z"/><circle cx="12" cy="12" r="3"/></svg>
         </div>
-        <div class="tour-nombre">Laguna Sauce</div>
-        <div class="tour-desc">La laguna azul de San Martín. Paseo en bote, natación y almuerzo frente al espejo de agua rodeado de selva.</div>
+        <div class="tour-nombre" data-i18n="tour.3.nombre">Laguna Sauce</div>
+        <div class="tour-desc" data-i18n="tour.3.desc">La laguna azul de San Martín. Paseo en bote, natación y almuerzo frente al espejo de agua rodeado de selva.</div>
         <div class="tour-meta">
-          <span class="tour-dur">Día completo</span>
+          <span class="tour-dur" data-i18n="tour.3.dur">Día completo</span>
           <span class="tour-precio">S/ 90</span>
         </div>
       </div>
@@ -1860,10 +1913,10 @@ footer {
         <div class="tour-icon">
           <svg viewBox="0 0 24 24"><path d="M3 18l4-8 4 4 4-6 4 10"/><path d="M3 18h18"/></svg>
         </div>
-        <div class="tour-nombre">Sendero Amazónico</div>
-        <div class="tour-desc">Caminata guiada por la flora y fauna local. Identificación de plantas medicinales, aves y mariposas amazónicas.</div>
+        <div class="tour-nombre" data-i18n="tour.4.nombre">Sendero Amazónico</div>
+        <div class="tour-desc" data-i18n="tour.4.desc">Caminata guiada por la flora y fauna local. Identificación de plantas medicinales, aves y mariposas amazónicas.</div>
         <div class="tour-meta">
-          <span class="tour-dur">3 - 4 horas</span>
+          <span class="tour-dur" data-i18n="tour.4.dur">3 - 4 horas</span>
           <span class="tour-precio">S/ 40</span>
         </div>
       </div>
@@ -1879,25 +1932,25 @@ footer {
   <div class="contacto-bg"></div>
   <div class="contacto-overlay"></div>
   <div class="contacto-inner">
-    <h2 class="contacto-title reveal">¿Listo para<br><em>hospedarte?</em></h2>
-    <p class="contacto-sub reveal">Reserva directa. Sin intermediarios. Mejor precio garantizado.</p>
+    <h2 class="contacto-title reveal" data-i18n-html="contact.title">¿Listo para<br><em>hospedarte?</em></h2>
+    <p class="contacto-sub reveal" data-i18n="contact.sub">Reserva directa. Sin intermediarios. Mejor precio garantizado.</p>
 
     <div class="contacto-details reveal">
       <div class="contacto-item">
-        <span class="contacto-item-label">Teléfono / WhatsApp</span>
+        <span class="contacto-item-label" data-i18n="contact.label1">Teléfono / WhatsApp</span>
         <div class="contacto-item-val">
           <a href="https://wa.me/51975464923">+51 975 464 923</a><br>
           <a href="https://wa.me/51975464878">+51 975 464 878</a>
         </div>
       </div>
       <div class="contacto-item">
-        <span class="contacto-item-label">Correo electrónico</span>
+        <span class="contacto-item-label" data-i18n="contact.label2">Correo electrónico</span>
         <div class="contacto-item-val">
           <a href="mailto:maderalabrada@hotmail.com">maderalabrada@hotmail.com</a>
         </div>
       </div>
       <div class="contacto-item">
-        <span class="contacto-item-label">Dirección</span>
+        <span class="contacto-item-label" data-i18n="contact.label3">Dirección</span>
         <div class="contacto-item-val">
           Psje. Santa Mónica S/N<br>
           Av. Circunvalación cdras. 18-19<br>
@@ -1905,8 +1958,8 @@ footer {
         </div>
       </div>
       <div class="contacto-item">
-        <span class="contacto-item-label">Check-in / Check-out</span>
-        <div class="contacto-item-val">
+        <span class="contacto-item-label" data-i18n="contact.label4">Check-in / Check-out</span>
+        <div class="contacto-item-val" data-i18n-html="contact.checkin">
           Ingreso: 2:00 pm<br>
           Salida: 12:00 pm
         </div>
@@ -1914,8 +1967,8 @@ footer {
     </div>
 
     <div class="contacto-btns reveal">
-      <button class="btn-primary" onclick="document.getElementById('chat-btn').click()">Chatear ahora</button>
-      <a href="https://wa.me/51975464923" target="_blank" class="btn-outline-light">Contactar por WhatsApp</a>
+      <button class="btn-primary" data-i18n="contact.btn1" onclick="document.getElementById('chat-btn').click()">Chatear ahora</button>
+      <a href="https://wa.me/51975464923" target="_blank" class="btn-outline-light" data-i18n="contact.btn2">Contactar por WhatsApp</a>
     </div>
   </div>
 </section>
@@ -1929,7 +1982,7 @@ footer {
 
       <div class="footer-brand">
         <img src="img/logo.png" alt="Madera Labrada Lodge">
-        <p class="footer-tagline">"La selva como tú nunca la habías vivido"</p>
+        <p class="footer-tagline" data-i18n="footer.tagline">"La selva como tú nunca la habías vivido"</p>
         <div class="footer-social">
           <a href="https://www.instagram.com/maderalabradalodge" target="_blank" aria-label="Instagram">
             <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
@@ -1941,31 +1994,31 @@ footer {
       </div>
 
       <div class="footer-col">
-        <h4>Habitaciones</h4>
+        <h4 data-i18n="footer.h1">Habitaciones</h4>
         <ul>
           <li><a href="#habitaciones">Simple</a></li>
           <li><a href="#habitaciones">Matrimonial</a></li>
           <li><a href="#habitaciones">Doble</a></li>
           <li><a href="#habitaciones">Triple</a></li>
           <li><a href="#habitaciones">Cuádruple</a></li>
-          <li><a href="#habitaciones">Con aire acondicionado</a></li>
+          <li><a href="#habitaciones" data-i18n="footer.l1">Con aire acondicionado</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
-        <h4>Servicios</h4>
+        <h4 data-i18n="footer.h2">Servicios</h4>
         <ul>
-          <li><a href="#experiencias">Piscina selvática</a></li>
-          <li><a href="#experiencias">Restaurante Los Tukos</a></li>
-          <li><a href="#tours">Tours amazónicos</a></li>
-          <li><a href="#paquetes">Paquetes especiales</a></li>
-          <li><a href="#contacto">Desayuno incluido</a></li>
-          <li><a href="#contacto">WiFi gratuito</a></li>
+          <li><a href="#experiencias" data-i18n="footer.s1">Piscina selvática</a></li>
+          <li><a href="#experiencias" data-i18n="footer.s2">Restaurante Los Tukos</a></li>
+          <li><a href="#tours" data-i18n="footer.s3">Tours amazónicos</a></li>
+          <li><a href="#paquetes" data-i18n="footer.s4">Paquetes especiales</a></li>
+          <li><a href="#contacto" data-i18n="footer.s5">Desayuno incluido</a></li>
+          <li><a href="#contacto" data-i18n="footer.s6">WiFi gratuito</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
-        <h4>Contacto</h4>
+        <h4 data-i18n="footer.h3">Contacto</h4>
         <ul>
           <li><a href="https://wa.me/51975464923">+51 975 464 923</a></li>
           <li><a href="https://wa.me/51975464878">+51 975 464 878</a></li>
@@ -1977,7 +2030,7 @@ footer {
     </div>
 
     <div class="footer-bottom">
-      <p class="footer-copy">&copy; 2026 Madera Labrada Lodge Ecológico S.A.C. Todos los derechos reservados.</p>
+      <p class="footer-copy" data-i18n="footer.copy">&copy; 2026 Madera Labrada Lodge Ecológico S.A.C. Todos los derechos reservados.</p>
       <p class="footer-copy">Tarapoto, San Martín, Perú</p>
     </div>
   </div>
@@ -2003,8 +2056,8 @@ footer {
 
 <!-- Chat hint tooltip -->
 <div class="chat-hint" id="chatHint">
-  <strong>Lucia — Asistente virtual</strong>
-  Consultá disponibilidad, precios y paquetes al instante
+  <strong data-i18n="chat.hint.title">Lucia — Asistente virtual</strong>
+  <span data-i18n="chat.hint.sub">Consultá disponibilidad, precios y paquetes al instante</span>
 </div>
 
 <button id="chat-btn" aria-label="Abrir chat de consultas">
@@ -2021,7 +2074,7 @@ footer {
       <div class="chat-header-name">Lucia — Asistente del Lodge</div>
       <div class="chat-header-status">
         <div class="chat-online-dot"></div>
-        En linea ahora
+        <span data-i18n="chat.status">En linea ahora</span>
       </div>
     </div>
     <button class="chat-close" id="chatClose" aria-label="Cerrar chat">
@@ -2031,7 +2084,7 @@ footer {
   <div class="chat-messages" id="chatMessages"></div>
   <div class="quick-replies" id="quickReplies"></div>
   <div class="chat-input-area">
-    <textarea id="chat-input" placeholder="Escribe tu consulta..." rows="1" aria-label="Mensaje"></textarea>
+    <textarea id="chat-input" placeholder="Escribe tu consulta..." data-i18n-placeholder="chat.placeholder" rows="1" aria-label="Mensaje"></textarea>
     <button id="chat-send" disabled aria-label="Enviar">
       <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
     </button>
@@ -2142,6 +2195,201 @@ gsap.fromTo('.tour',
 )
 </script>
 
+<script>
+window.LANG = localStorage.getItem('ml_lang') || 'es'
+
+const TRANSLATIONS = {
+  es: {
+    'nav.rooms':'Habitaciones','nav.experiences':'Experiencias','nav.packages':'Paquetes',
+    'nav.gallery':'Galería','nav.contact':'Contacto','nav.book':'Reservar','nav.bookNow':'Reservar ahora',
+    'hero.eyebrow':'Tarapoto · San Martín · Perú',
+    'hero.h1':'Donde la selva<br>es tu hogar',
+    'hero.sub':'Lodge ecológico a 5 minutos del centro de Tarapoto',
+    'hero.cta':'Consultar disponibilidad','hero.scroll':'Descubrir',
+    'stats.rooms':'Habitaciones','stats.min':'Min del centro','stats.night':'Por noche','stats.ac':'Hab. con A/C',
+    'rooms.eyebrow':'Acomodo','rooms.title':'Nuestras<br><em>habitaciones</em>',
+    'rooms.desc':'84 habitaciones distribuidas en dos bloques. Cada una con baño privado, TV LED y hamacas en balcón frente a la selva.',
+    'rooms.room':'Habitación','rooms.roomSpecial':'Habitación especial','rooms.night':'/ noche',
+    'rooms.persons1':'1 persona','rooms.persons2':'2 personas','rooms.persons3':'3 personas','rooms.persons4':'4 personas',
+    'rooms.note':'14 habitaciones con <strong>aire acondicionado</strong> disponibles — tarifa con A/C desde <strong>S/ 130 / noche</strong> (+S/ 40 sobre tarifa base)',
+    'rooms.acBtn':'Consultar hab. con A/C',
+    'pool.eyebrow':'Instalaciones','pool.title':'La <em>piscina</em>',
+    'pool.sub':'Rodéate de naturaleza amazónica. Nuestra piscina selvática está diseñada para el descanso y la conexión con el entorno natural de San Martín.',
+    'pool.detail':'Incluida en todas las reservas. Abierta todos los días de 7:00 am a 9:00 pm. Vista panorámica a la vegetación selvática. Zona de hamacas y tumbonas.',
+    'rest.eyebrow':'Gastronomía','rest.title':'Restaurante<br><em>Los Tukos</em>',
+    'rest.sub':'Cocina amazónica auténtica con ingredientes locales de San Martín. Desayuno buffet continental incluido en tu estadía.',
+    'rest.detail':'Abierto para desayuno, almuerzo y cena. Especialidades amazónicas: juane, tacacho, cecina y pescados de río. Vista al jardín selvático.',
+    'pkg.eyebrow':'Ofertas exclusivas','pkg.title':'Paquetes <em>especiales</em>','pkg.sub':'Reserva directa · Mejor precio garantizado',
+    'pkg.badge1':'Más popular','pkg.name1':'Romántico Selva',
+    'pkg.f1a':'2 noches en habitación matrimonial','pkg.f1b':'Desayuno buffet para 2 personas',
+    'pkg.f1c':'Cena privada en balcón','pkg.f1d':'Decoración especial del cuarto',
+    'pkg.f1e':'Bebida de bienvenida','pkg.f1f':'Piscina libre',
+    'pkg.badge2':'Familiar','pkg.name2':'Familia Amazónica',
+    'pkg.f2a':'3 noches en habitación familiar','pkg.f2b':'Desayunos incluidos',
+    'pkg.f2c':'Tour Catarata Ahuashiyacu','pkg.f2d':'Tour Ciudad de Lamas','pkg.f2e':'Piscina libre todo el día',
+    'pkg.badge3':'Bienestar','pkg.name3':'Retiro Wellness',
+    'pkg.f3a':'2 noches en habitación doble','pkg.f3b':'Desayuno saludable',
+    'pkg.f3c':'Tarde en piscina','pkg.f3d':'Cena amazónica','pkg.f3e':'Cóctel de bienvenida',
+    'pkg.btn':'Consultar',
+    'gal.eyebrow':'Fotografía','gal.title':'El <em style="color:var(--oro)">lodge</em>',
+    'gal.desc':'Madera Labrada Lodge en el corazón de la selva de San Martín.',
+    'tour.eyebrow':'Actividades','tour.title':'Aventura desde <em>el lodge</em>',
+    'tour.sub':'Tours sin intermediarios. Organizados directamente por el lodge para garantizar la mejor experiencia y precio.',
+    'tour.1.nombre':'Catarata Ahuashiyacu','tour.1.desc':'La catarata más emblemática de Tarapoto. Caída de 40 metros en plena selva, accesible por sendero sombreado.','tour.1.dur':'Medio día',
+    'tour.2.nombre':'Ciudad de Lamas','tour.2.desc':'Pueblo andino-amazónico a 22 km de Tarapoto. Cultura Lamas, vistas panorámicas del valle y artesanía local.','tour.2.dur':'Medio día',
+    'tour.3.nombre':'Laguna Sauce','tour.3.desc':'La laguna azul de San Martín. Paseo en bote, natación y almuerzo frente al espejo de agua rodeado de selva.','tour.3.dur':'Día completo',
+    'tour.4.nombre':'Sendero Amazónico','tour.4.desc':'Caminata guiada por la flora y fauna local. Identificación de plantas medicinales, aves y mariposas amazónicas.','tour.4.dur':'3 - 4 horas',
+    'contact.title':'¿Listo para<br><em>hospedarte?</em>','contact.sub':'Reserva directa. Sin intermediarios. Mejor precio garantizado.',
+    'contact.label1':'Teléfono / WhatsApp','contact.label2':'Correo electrónico','contact.label3':'Dirección','contact.label4':'Check-in / Check-out',
+    'contact.checkin':'Ingreso: 2:00 pm<br>Salida: 12:00 pm',
+    'contact.btn1':'Chatear ahora','contact.btn2':'Contactar por WhatsApp',
+    'footer.tagline':'"La selva como tú nunca la habías vivido"',
+    'footer.h1':'Habitaciones','footer.h2':'Servicios','footer.h3':'Contacto',
+    'footer.l1':'Con aire acondicionado',
+    'footer.s1':'Piscina selvática','footer.s2':'Restaurante Los Tukos','footer.s3':'Tours amazónicos',
+    'footer.s4':'Paquetes especiales','footer.s5':'Desayuno incluido','footer.s6':'WiFi gratuito',
+    'footer.copy':'© 2026 Madera Labrada Lodge Ecológico S.A.C. Todos los derechos reservados.',
+    'chat.hint.title':'Lucia — Asistente virtual','chat.hint.sub':'Consultá disponibilidad, precios y paquetes al instante',
+    'chat.status':'En linea ahora','chat.placeholder':'Escribe tu consulta...',
+    'chat.dp.checkin':'Llegada','chat.dp.checkout':'Salida','chat.dp.persons':'Personas',
+    'chat.dp.ac':'Solo habitaciones con aire acondicionado','chat.dp.confirm':'Ver disponibilidad',
+    'chat.form.confirm':'Enviar reserva por WhatsApp',
+  },
+  en: {
+    'nav.rooms':'Rooms','nav.experiences':'Experiences','nav.packages':'Packages',
+    'nav.gallery':'Gallery','nav.contact':'Contact','nav.book':'Book','nav.bookNow':'Book now',
+    'hero.eyebrow':'Tarapoto · San Martín · Peru',
+    'hero.h1':'Where the jungle<br>is your home',
+    'hero.sub':'Eco lodge 5 minutes from downtown Tarapoto',
+    'hero.cta':'Check availability','hero.scroll':'Discover',
+    'stats.rooms':'Rooms','stats.min':'Min from center','stats.night':'Per night','stats.ac':'Rooms w/ A/C',
+    'rooms.eyebrow':'Accommodation','rooms.title':'Our<br><em>rooms</em>',
+    'rooms.desc':'84 rooms spread across two blocks. Each with private bathroom, LED TV and hammocks on the balcony facing the jungle.',
+    'rooms.room':'Room','rooms.roomSpecial':'Special room','rooms.night':'/ night',
+    'rooms.persons1':'1 guest','rooms.persons2':'2 guests','rooms.persons3':'3 guests','rooms.persons4':'4 guests',
+    'rooms.note':'14 rooms with <strong>air conditioning</strong> available — A/C rate from <strong>S/ 130 / night</strong> (+S/ 40 over base rate)',
+    'rooms.acBtn':'Check A/C rooms',
+    'pool.eyebrow':'Facilities','pool.title':'The <em>pool</em>',
+    'pool.sub':'Surrounded by Amazonian nature. Our jungle pool is designed for relaxation and connection with the natural surroundings of San Martín.',
+    'pool.detail':'Included in all bookings. Open every day from 7:00 am to 9:00 pm. Panoramic view of jungle vegetation. Hammock and sunbed area.',
+    'rest.eyebrow':'Gastronomy','rest.title':'Restaurant<br><em>Los Tukos</em>',
+    'rest.sub':'Authentic Amazonian cuisine with local ingredients from San Martín. Continental buffet breakfast included in your stay.',
+    'rest.detail':'Open for breakfast, lunch and dinner. Amazonian specialties: juane, tacacho, cecina and river fish. Jungle garden view.',
+    'pkg.eyebrow':'Exclusive offers','pkg.title':'<em>Special</em> packages','pkg.sub':'Direct booking · Best price guaranteed',
+    'pkg.badge1':'Most popular','pkg.name1':'Romantic Jungle',
+    'pkg.f1a':'2 nights in matrimonial room','pkg.f1b':'Buffet breakfast for 2',
+    'pkg.f1c':'Private dinner on balcony','pkg.f1d':'Special room decoration',
+    'pkg.f1e':'Welcome drink','pkg.f1f':'Free pool access',
+    'pkg.badge2':'Family','pkg.name2':'Amazon Family',
+    'pkg.f2a':'3 nights in family room','pkg.f2b':'Breakfasts included',
+    'pkg.f2c':'Ahuashiyacu Waterfall tour','pkg.f2d':'Lamas City tour','pkg.f2e':'All-day free pool access',
+    'pkg.badge3':'Wellness','pkg.name3':'Wellness Retreat',
+    'pkg.f3a':'2 nights in double room','pkg.f3b':'Healthy breakfast',
+    'pkg.f3c':'Afternoon at pool','pkg.f3d':'Amazonian dinner','pkg.f3e':'Welcome cocktail',
+    'pkg.btn':'Inquire',
+    'gal.eyebrow':'Photography','gal.title':'The <em style="color:var(--oro)">lodge</em>',
+    'gal.desc':'Madera Labrada Lodge in the heart of the San Martín jungle.',
+    'tour.eyebrow':'Activities','tour.title':'Adventure from <em>the lodge</em>',
+    'tour.sub':'Direct tours. Organized by the lodge to guarantee the best experience and price.',
+    'tour.1.nombre':'Ahuashiyacu Waterfall','tour.1.desc':'The most iconic waterfall near Tarapoto. 40-meter drop in the jungle, accessible via shaded trail.','tour.1.dur':'Half day',
+    'tour.2.nombre':'Lamas City','tour.2.desc':'Andean-Amazonian town 22 km from Tarapoto. Lamas culture, panoramic valley views and local crafts.','tour.2.dur':'Half day',
+    'tour.3.nombre':'Sauce Lagoon','tour.3.desc':'The blue lagoon of San Martín. Boat ride, swimming and lunch by the waterfront surrounded by jungle.','tour.3.dur':'Full day',
+    'tour.4.nombre':'Amazon Trail','tour.4.desc':'Guided walk through local flora and fauna. Identification of medicinal plants, birds and Amazonian butterflies.','tour.4.dur':'3 - 4 hours',
+    'contact.title':'Ready to<br><em>stay with us?</em>','contact.sub':'Direct booking. No middlemen. Best price guaranteed.',
+    'contact.label1':'Phone / WhatsApp','contact.label2':'Email','contact.label3':'Address','contact.label4':'Check-in / Check-out',
+    'contact.checkin':'Check-in: 2:00 pm<br>Check-out: 12:00 pm',
+    'contact.btn1':'Chat now','contact.btn2':'Contact on WhatsApp',
+    'footer.tagline':'"The jungle like you\'ve never experienced it"',
+    'footer.h1':'Rooms','footer.h2':'Services','footer.h3':'Contact',
+    'footer.l1':'Air conditioned',
+    'footer.s1':'Jungle pool','footer.s2':'Restaurant Los Tukos','footer.s3':'Amazonian tours',
+    'footer.s4':'Special packages','footer.s5':'Breakfast included','footer.s6':'Free WiFi',
+    'footer.copy':'© 2026 Madera Labrada Lodge Ecológico S.A.C. All rights reserved.',
+    'chat.hint.title':'Lucia — Virtual assistant','chat.hint.sub':'Check availability, prices and packages instantly',
+    'chat.status':'Online now','chat.placeholder':'Type your question...',
+    'chat.dp.checkin':'Check-in','chat.dp.checkout':'Check-out','chat.dp.persons':'Guests',
+    'chat.dp.ac':'Air conditioned rooms only','chat.dp.confirm':'Check availability',
+    'chat.form.confirm':'Send booking via WhatsApp',
+  },
+  pt: {
+    'nav.rooms':'Quartos','nav.experiences':'Experiências','nav.packages':'Pacotes',
+    'nav.gallery':'Galeria','nav.contact':'Contato','nav.book':'Reservar','nav.bookNow':'Reservar agora',
+    'hero.eyebrow':'Tarapoto · San Martín · Peru',
+    'hero.h1':'Onde a selva<br>é a sua casa',
+    'hero.sub':'Lodge ecológico a 5 minutos do centro de Tarapoto',
+    'hero.cta':'Verificar disponibilidade','hero.scroll':'Descobrir',
+    'stats.rooms':'Quartos','stats.min':'Min do centro','stats.night':'Por noite','stats.ac':'Quartos c/ A/C',
+    'rooms.eyebrow':'Acomodação','rooms.title':'Nossos<br><em>quartos</em>',
+    'rooms.desc':'84 quartos distribuídos em dois blocos. Cada um com banheiro privativo, TV LED e redes na varanda com vista para a selva.',
+    'rooms.room':'Quarto','rooms.roomSpecial':'Quarto especial','rooms.night':'/ noite',
+    'rooms.persons1':'1 hóspede','rooms.persons2':'2 hóspedes','rooms.persons3':'3 hóspedes','rooms.persons4':'4 hóspedes',
+    'rooms.note':'14 quartos com <strong>ar-condicionado</strong> disponíveis — tarifa c/ A/C a partir de <strong>S/ 130 / noite</strong> (+S/ 40 sobre tarifa base)',
+    'rooms.acBtn':'Consultar quartos c/ A/C',
+    'pool.eyebrow':'Instalações','pool.title':'A <em>piscina</em>',
+    'pool.sub':'Rodeado pela natureza amazônica. Nossa piscina selvática é projetada para o descanso e a conexão com o ambiente natural de San Martín.',
+    'pool.detail':'Incluída em todas as reservas. Aberta todos os dias das 7:00 às 21:00. Vista panorâmica para a vegetação da selva. Área de redes e espreguiçadeiras.',
+    'rest.eyebrow':'Gastronomia','rest.title':'Restaurante<br><em>Los Tukos</em>',
+    'rest.sub':'Culinária amazônica autêntica com ingredientes locais de San Martín. Café da manhã buffet continental incluído na sua estadia.',
+    'rest.detail':'Aberto para café da manhã, almoço e jantar. Especialidades amazônicas: juane, tacacho, cecina e peixes de rio. Vista para o jardim selvático.',
+    'pkg.eyebrow':'Ofertas exclusivas','pkg.title':'Pacotes <em>especiais</em>','pkg.sub':'Reserva direta · Melhor preço garantido',
+    'pkg.badge1':'Mais popular','pkg.name1':'Romântico Selva',
+    'pkg.f1a':'2 noites em quarto de casal','pkg.f1b':'Café da manhã buffet para 2',
+    'pkg.f1c':'Jantar privativo na varanda','pkg.f1d':'Decoração especial do quarto',
+    'pkg.f1e':'Bebida de boas-vindas','pkg.f1f':'Piscina livre',
+    'pkg.badge2':'Família','pkg.name2':'Família Amazônica',
+    'pkg.f2a':'3 noites em quarto familiar','pkg.f2b':'Café da manhã incluído',
+    'pkg.f2c':'Tour Cachoeira Ahuashiyacu','pkg.f2d':'Tour Cidade de Lamas','pkg.f2e':'Piscina livre o dia todo',
+    'pkg.badge3':'Bem-estar','pkg.name3':'Retiro Wellness',
+    'pkg.f3a':'2 noites em quarto duplo','pkg.f3b':'Café da manhã saudável',
+    'pkg.f3c':'Tarde na piscina','pkg.f3d':'Jantar amazônico','pkg.f3e':'Coquetel de boas-vindas',
+    'pkg.btn':'Consultar',
+    'gal.eyebrow':'Fotografia','gal.title':'O <em style="color:var(--oro)">lodge</em>',
+    'gal.desc':'Madera Labrada Lodge no coração da selva de San Martín.',
+    'tour.eyebrow':'Atividades','tour.title':'Aventura <em>no lodge</em>',
+    'tour.sub':'Tours diretos. Organizados pelo lodge para garantir a melhor experiência e preço.',
+    'tour.1.nombre':'Cachoeira Ahuashiyacu','tour.1.desc':'A cachoeira mais icônica de Tarapoto. Queda de 40 metros na selva, acessível por trilha sombreada.','tour.1.dur':'Meio período',
+    'tour.2.nombre':'Cidade de Lamas','tour.2.desc':'Cidade andino-amazônica a 22 km de Tarapoto. Cultura Lamas, vistas panorâmicas do vale e artesanato local.','tour.2.dur':'Meio período',
+    'tour.3.nombre':'Lagoa Sauce','tour.3.desc':'A lagoa azul de San Martín. Passeio de barco, natação e almoço à beira da água rodeado de selva.','tour.3.dur':'Dia completo',
+    'tour.4.nombre':'Trilha Amazônica','tour.4.desc':'Caminhada guiada pela flora e fauna local. Identificação de plantas medicinais, aves e borboletas amazônicas.','tour.4.dur':'3 - 4 horas',
+    'contact.title':'Pronto para<br><em>se hospedar?</em>','contact.sub':'Reserva direta. Sem intermediários. Melhor preço garantido.',
+    'contact.label1':'Telefone / WhatsApp','contact.label2':'E-mail','contact.label3':'Endereço','contact.label4':'Check-in / Check-out',
+    'contact.checkin':'Check-in: 14:00<br>Check-out: 12:00',
+    'contact.btn1':'Conversar agora','contact.btn2':'Contato via WhatsApp',
+    'footer.tagline':'"A selva como você nunca viveu"',
+    'footer.h1':'Quartos','footer.h2':'Serviços','footer.h3':'Contato',
+    'footer.l1':'Com ar-condicionado',
+    'footer.s1':'Piscina selvática','footer.s2':'Restaurante Los Tukos','footer.s3':'Tours amazônicos',
+    'footer.s4':'Pacotes especiais','footer.s5':'Café da manhã incluído','footer.s6':'WiFi gratuito',
+    'footer.copy':'© 2026 Madera Labrada Lodge Ecológico S.A.C. Todos os direitos reservados.',
+    'chat.hint.title':'Lucia — Assistente virtual','chat.hint.sub':'Verifique disponibilidade, preços e pacotes instantaneamente',
+    'chat.status':'Online agora','chat.placeholder':'Escreva sua pergunta...',
+    'chat.dp.checkin':'Chegada','chat.dp.checkout':'Saída','chat.dp.persons':'Hóspedes',
+    'chat.dp.ac':'Apenas quartos com ar-condicionado','chat.dp.confirm':'Ver disponibilidade',
+    'chat.form.confirm':'Enviar reserva via WhatsApp',
+  }
+}
+
+function t(key) {
+  const lang = window.LANG || 'es'
+  return (TRANSLATIONS[lang] && TRANSLATIONS[lang][key]) || (TRANSLATIONS.es[key]) || key
+}
+
+function setLang(lang) {
+  window.LANG = lang
+  localStorage.setItem('ml_lang', lang)
+  document.documentElement.lang = {es:'es',en:'en',pt:'pt'}[lang] || 'es'
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n) })
+  document.querySelectorAll('[data-i18n-html]').forEach(el => { el.innerHTML = t(el.dataset.i18nHtml) })
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { el.placeholder = t(el.dataset.i18nPlaceholder) })
+  document.querySelectorAll('[data-lang]').forEach(btn => { btn.classList.toggle('active', btn.dataset.lang === lang) })
+}
+
+document.querySelectorAll('[data-lang]').forEach(btn => {
+  btn.addEventListener('click', () => setLang(btn.dataset.lang))
+})
+if (window.LANG !== 'es') setLang(window.LANG)
+</script>
+
 <!-- Chat widget script -->
 <script>
 (function() {
@@ -2171,21 +2419,59 @@ gsap.fromTo('.tour',
     return { cap: base.cap, precio: ac ? base.ac : base.v, ac }
   }
 
-  const R = {
-    precios: `Tarifas por noche (incluye desayuno continental, cóctel de bienvenida y piscina):\n\nCon ventilador:\n  Simple (1p) — S/ 90\n  Matrimonial / Doble (2p) — S/ 170\n  Triple (3p) — S/ 230\n  Cuádruple (4p) — S/ 270\n  Quíntuple (5p) — S/ 300\n\nCon aire acondicionado (S/ 40 adicional):\n  Simple — S/ 130\n  Matrimonial / Doble — S/ 210\n  Triple — S/ 270\n  Cuádruple — S/ 310\n  Quíntuple — S/ 340`,
-    ac: `Tenemos 14 habitaciones con aire acondicionado, todas en el Bloque 1:\n\nALMENDRA, BIJAO, CACTUS, CATLEYA, CEDRO, CLAVEL, CROTON, GIRASOL, HUAYRURO, JASMIN, LIRIO, QUINILLA, RETAMA y YARINA.\n\nEl resto tiene ventilador de techo. ¿Quieres consultar disponibilidad de habitaciones con AC?`,
-    paquetes: `Paquetes especiales (reserva directa = mejor precio):\n\nRomántico Selva — S/ 380: 2 noches matrimonial, desayuno buffet x2, cena privada en balcón, decoración especial.\n\nFamilia Amazónica — S/ 750: 3 noches familiar, desayunos, tour Catarata Ahuashiyacu + Ciudad de Lamas, piscina libre.\n\nRetiro Wellness Selva — S/ 420: 2 noches doble, desayuno saludable, tarde en piscina, cena amazónica.`,
-    tours: `Tours desde el lodge sin intermediarios:\n\nCatarata Ahuashiyacu — S/ 45. Medio día, caída de 40 m.\nCiudad de Lamas — S/ 55. Pueblo andino-amazónico, vistas panorámicas.\nLaguna Sauce — S/ 90. Día completo, paseo en bote.\nSendero Amazónico — S/ 40. 3-4 horas, flora y fauna.`,
-    ubicacion: `Pasaje Santa Mónica S/N, entre cuadras 18-19 de la Av. Circunvalación, Tarapoto, San Martín. A 5 minutos del centro.`,
-    contacto: `WhatsApp / Teléfono: +51 975 464 923 o +51 975 464 878\nEmail: maderalabrada@hotmail.com\nInstagram: @maderalabradalodge`,
-    checkin: `Check-in: 2:00 pm. Check-out: 12:00 pm.\n\nPara reservar se requiere 50% de depósito:\nYape: 975464878 — Madera Labrada S.A.C.\nBCP: 550-03875919-0-03\n\nEl 50% restante se abona al llegar.`,
-    servicios: `Todas las habitaciones incluyen:\nDesayuno continental, cóctel de bienvenida, piscina, WiFi, TV LED 32", baño privado, hamacas en balcón.\n\nInstalaciones: piscina selvática, Restaurante Los Tukos, lavandería, mirador.`,
-    reservar: `Para reservar busca la habitación disponible y yo te guío paso a paso. También puedes escribirnos directamente al WhatsApp +51 975 464 923.`,
-    fallback: `Puedo ayudarte con disponibilidad, precios, habitaciones con AC, paquetes, tours o contacto. ¿Qué necesitas?`,
+  function getR() {
+    const lang = window.LANG || 'es'
+    if (lang === 'en') return {
+      precios: `Rates per night (includes continental breakfast, welcome cocktail & pool):\n\nFan rooms:\n  Single (1p) — S/ 90\n  Matrimonial / Double (2p) — S/ 170\n  Triple (3p) — S/ 230\n  Quad (4p) — S/ 270\n  Quintuple (5p) — S/ 300\n\nWith A/C (+S/ 40):\n  Single — S/ 130\n  Matrimonial / Double — S/ 210\n  Triple — S/ 270\n  Quad — S/ 310\n  Quintuple — S/ 340`,
+      ac: `We have 14 air-conditioned rooms, all in Block 1:\n\nALMENDRA, BIJAO, CACTUS, CATLEYA, CEDRO, CLAVEL, CROTON, GIRASOL, HUAYRURO, JASMIN, LIRIO, QUINILLA, RETAMA and YARINA.\n\nThe rest have ceiling fans. Would you like to check A/C room availability?`,
+      paquetes: `Special packages (direct booking = best price):\n\nRomantic Jungle — S/ 380: 2 nights matrimonial, buffet breakfast ×2, private balcony dinner, special decoration.\n\nAmazon Family — S/ 750: 3 nights family room, breakfasts, Ahuashiyacu Waterfall + Lamas City tours, free pool.\n\nWellness Retreat — S/ 420: 2 nights double, healthy breakfast, pool afternoon, Amazonian dinner.`,
+      tours: `Tours directly from the lodge:\n\nAhuashiyacu Waterfall — S/ 45. Half day, 40m drop.\nLamas City — S/ 55. Andean-Amazonian town, panoramic views.\nSauce Lagoon — S/ 90. Full day, boat ride.\nAmazon Trail — S/ 40. 3–4 hours, flora & fauna.`,
+      ubicacion: `Pasaje Santa Mónica S/N, between blocks 18–19 of Av. Circunvalación, Tarapoto, San Martín. 5 minutes from the city center.`,
+      contacto: `WhatsApp / Phone: +51 975 464 923 or +51 975 464 878\nEmail: maderalabrada@hotmail.com\nInstagram: @maderalabradalodge`,
+      checkin: `Check-in: 2:00 pm. Check-out: 12:00 pm.\n\nA 50% deposit is required:\nYape: 975464878 — Madera Labrada S.A.C.\nBCP: 550-03875919-0-03\n\nThe remaining 50% is paid on arrival.`,
+      servicios: `All rooms include:\nContinental breakfast, welcome cocktail, pool, WiFi, 32" LED TV, private bathroom, hammocks on balcony.\n\nFacilities: jungle pool, Los Tukos Restaurant, laundry, viewpoint.`,
+      reservar: `To book, search for available rooms and I'll guide you step by step. You can also write to us on WhatsApp +51 975 464 923.`,
+      fallback: `I can help with availability, prices, A/C rooms, packages, tours or contact. What do you need?`,
+    }
+    if (lang === 'pt') return {
+      precios: `Tarifas por noite (inclui café da manhã continental, coquetel de boas-vindas e piscina):\n\nCom ventilador:\n  Solteiro (1p) — S/ 90\n  Casal / Duplo (2p) — S/ 170\n  Triplo (3p) — S/ 230\n  Quádruplo (4p) — S/ 270\n  Quíntuplo (5p) — S/ 300\n\nCom A/C (+S/ 40):\n  Solteiro — S/ 130\n  Casal / Duplo — S/ 210\n  Triplo — S/ 270\n  Quádruplo — S/ 310\n  Quíntuplo — S/ 340`,
+      ac: `Temos 14 quartos com ar-condicionado, todos no Bloco 1:\n\nALMENDRA, BIJAO, CACTUS, CATLEYA, CEDRO, CLAVEL, CROTON, GIRASOL, HUAYRURO, JASMIN, LIRIO, QUINILLA, RETAMA e YARINA.\n\nOs demais têm ventilador de teto. Deseja verificar disponibilidade de quartos com A/C?`,
+      paquetes: `Pacotes especiais (reserva direta = melhor preço):\n\nRomântico Selva — S/ 380: 2 noites quarto de casal, café buffet ×2, jantar privativo na varanda, decoração especial.\n\nFamília Amazônica — S/ 750: 3 noites quarto familiar, cafés da manhã, tour Cachoeira Ahuashiyacu + Cidade de Lamas, piscina livre.\n\nRetiro Wellness — S/ 420: 2 noites quarto duplo, café saudável, tarde na piscina, jantar amazônico.`,
+      tours: `Tours diretos no lodge:\n\nCachoeira Ahuashiyacu — S/ 45. Meio período, queda de 40m.\nCidade de Lamas — S/ 55. Cidade andino-amazônica, vistas panorâmicas.\nLagoa Sauce — S/ 90. Dia completo, passeio de barco.\nTrilha Amazônica — S/ 40. 3–4 horas, flora e fauna.`,
+      ubicacion: `Pasaje Santa Mónica S/N, entre as quadras 18–19 da Av. Circunvalación, Tarapoto, San Martín. A 5 minutos do centro.`,
+      contacto: `WhatsApp / Telefone: +51 975 464 923 ou +51 975 464 878\nE-mail: maderalabrada@hotmail.com\nInstagram: @maderalabradalodge`,
+      checkin: `Check-in: 14:00. Check-out: 12:00.\n\n50% de depósito para confirmar:\nYape: 975464878 — Madera Labrada S.A.C.\nBCP: 550-03875919-0-03\n\nOs outros 50% são pagos na chegada.`,
+      servicios: `Todos os quartos incluem:\nCafé da manhã continental, coquetel de boas-vindas, piscina, WiFi, TV LED 32", banheiro privativo, redes na varanda.\n\nInstalações: piscina selvática, Restaurante Los Tukos, lavanderia, mirante.`,
+      reservar: `Para reservar, pesquise os quartos disponíveis e eu te guio passo a passo. Também pode nos escrever no WhatsApp +51 975 464 923.`,
+      fallback: `Posso ajudar com disponibilidade, preços, quartos com A/C, pacotes, tours ou contato. O que você precisa?`,
+    }
+    return {
+      precios: `Tarifas por noche (incluye desayuno continental, cóctel de bienvenida y piscina):\n\nCon ventilador:\n  Simple (1p) — S/ 90\n  Matrimonial / Doble (2p) — S/ 170\n  Triple (3p) — S/ 230\n  Cuádruple (4p) — S/ 270\n  Quíntuple (5p) — S/ 300\n\nCon aire acondicionado (S/ 40 adicional):\n  Simple — S/ 130\n  Matrimonial / Doble — S/ 210\n  Triple — S/ 270\n  Cuádruple — S/ 310\n  Quíntuple — S/ 340`,
+      ac: `Tenemos 14 habitaciones con aire acondicionado, todas en el Bloque 1:\n\nALMENDRA, BIJAO, CACTUS, CATLEYA, CEDRO, CLAVEL, CROTON, GIRASOL, HUAYRURO, JASMIN, LIRIO, QUINILLA, RETAMA y YARINA.\n\nEl resto tiene ventilador de techo. ¿Quieres consultar disponibilidad de habitaciones con AC?`,
+      paquetes: `Paquetes especiales (reserva directa = mejor precio):\n\nRomántico Selva — S/ 380: 2 noches matrimonial, desayuno buffet x2, cena privada en balcón, decoración especial.\n\nFamilia Amazónica — S/ 750: 3 noches familiar, desayunos, tour Catarata Ahuashiyacu + Ciudad de Lamas, piscina libre.\n\nRetiro Wellness Selva — S/ 420: 2 noches doble, desayuno saludable, tarde en piscina, cena amazónica.`,
+      tours: `Tours desde el lodge sin intermediarios:\n\nCatarata Ahuashiyacu — S/ 45. Medio día, caída de 40 m.\nCiudad de Lamas — S/ 55. Pueblo andino-amazónico, vistas panorámicas.\nLaguna Sauce — S/ 90. Día completo, paseo en bote.\nSendero Amazónico — S/ 40. 3-4 horas, flora y fauna.`,
+      ubicacion: `Pasaje Santa Mónica S/N, entre cuadras 18-19 de la Av. Circunvalación, Tarapoto, San Martín. A 5 minutos del centro.`,
+      contacto: `WhatsApp / Teléfono: +51 975 464 923 o +51 975 464 878\nEmail: maderalabrada@hotmail.com\nInstagram: @maderalabradalodge`,
+      checkin: `Check-in: 2:00 pm. Check-out: 12:00 pm.\n\nPara reservar se requiere 50% de depósito:\nYape: 975464878 — Madera Labrada S.A.C.\nBCP: 550-03875919-0-03\n\nEl 50% restante se abona al llegar.`,
+      servicios: `Todas las habitaciones incluyen:\nDesayuno continental, cóctel de bienvenida, piscina, WiFi, TV LED 32", baño privado, hamacas en balcón.\n\nInstalaciones: piscina selvática, Restaurante Los Tukos, lavandería, mirador.`,
+      reservar: `Para reservar busca la habitación disponible y yo te guío paso a paso. También puedes escribirnos directamente al WhatsApp +51 975 464 923.`,
+      fallback: `Puedo ayudarte con disponibilidad, precios, habitaciones con AC, paquetes, tours o contacto. ¿Qué necesitas?`,
+    }
   }
 
-  const QUICK_INIT = ['Buscar habitación', 'Habitaciones con AC', 'Ver precios', 'Paquetes especiales']
-  const BIENVENIDA = 'Hola, soy Lucia de Madera Labrada Lodge. Puedo buscarte la mejor habitación con disponibilidad en tiempo real. ¿En qué te ayudo?'
+  function getQUICK_INIT() {
+    const lang = window.LANG || 'es'
+    if (lang === 'en') return ['Find a room','A/C rooms','See prices','Special packages']
+    if (lang === 'pt') return ['Buscar quarto','Quartos com A/C','Ver preços','Pacotes especiais']
+    return ['Buscar habitación','Habitaciones con AC','Ver precios','Paquetes especiales']
+  }
+
+  function getBIENVENIDA() {
+    const lang = window.LANG || 'es'
+    if (lang === 'en') return "Hi, I'm Lucia from Madera Labrada Lodge. I can find you the best available room in real time. How can I help you?"
+    if (lang === 'pt') return 'Olá, sou Lucia do Madera Labrada Lodge. Posso encontrar o melhor quarto disponível em tempo real. Como posso ajudar?'
+    return 'Hola, soy Lucia de Madera Labrada Lodge. Puedo buscarte la mejor habitación con disponibilidad en tiempo real. ¿En qué te ayudo?'
+  }
 
   let conv = { step: 'idle', personas: null, ciISO: null, coISO: null, prefAC: false, opciones: null, noches: 0 }
   let isOpen = false, isTyping = false
@@ -2236,19 +2522,19 @@ gsap.fromTo('.tour',
     wrap.className = 'chat-dp'
     let selPersonas = defaultPersonas || null
     wrap.innerHTML = `
-      <label>Llegada</label>
+      <label>${t('chat.dp.checkin')}</label>
       <input type="date" class="dp-ci" min="${todayISO}" value="">
-      <label>Salida</label>
+      <label>${t('chat.dp.checkout')}</label>
       <input type="date" class="dp-co" min="${todayISO}" value="">
-      <label>Personas</label>
+      <label>${t('chat.dp.persons')}</label>
       <div class="chat-dp-personas">
-        ${[1,2,3,4,5].map(n=>`<button data-n="${n}" class="${selPersonas===n?'sel':''}">${n} persona${n>1?'s':''}</button>`).join('')}
+        ${[1,2,3,4,5].map(n=>`<button data-n="${n}" class="${selPersonas===n?'sel':''}">${n} ${personWord(n)}</button>`).join('')}
       </div>
       <label class="chat-dp-ac">
         <input type="checkbox" ${defaultAC?'checked':''}>
-        Solo habitaciones con aire acondicionado
+        ${t('chat.dp.ac')}
       </label>
-      <button class="dp-confirm" disabled>Ver disponibilidad</button>
+      <button class="dp-confirm" disabled>${t('chat.dp.confirm')}</button>
     `
     messages.appendChild(wrap)
     messages.scrollTop = messages.scrollHeight
@@ -2289,12 +2575,16 @@ gsap.fromTo('.tour',
   }
 
   function detectarMes(txt) {
-    const meses={enero:1,febrero:2,marzo:3,abril:4,mayo:5,junio:6,julio:7,agosto:8,septiembre:9,octubre:10,noviembre:11,diciembre:12}
+    const meses = {
+      enero:1,febrero:2,marzo:3,abril:4,mayo:5,junio:6,julio:7,agosto:8,septiembre:9,octubre:10,noviembre:11,diciembre:12,
+      january:1,february:2,march:3,april:4,may:5,june:6,july:7,august:8,september:9,october:10,november:11,december:12,
+      janeiro:1,fevereiro:2,março:3,abril:4,maio:5,junho:6,julho:7,agosto:8,setembro:9,outubro:10,novembro:11,dezembro:12
+    }
     const lo=txt.toLowerCase()
     for(const[n,m]of Object.entries(meses)){if(lo.includes(n)){const y=new Date().getFullYear();return `${y}-${String(m).padStart(2,'0')}`}}
     const now=new Date()
-    if(/este mes|mes actual/i.test(lo)) return `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`
-    if(/pr[oó]ximo mes|mes que viene/i.test(lo)){const nx=new Date(now.getFullYear(),now.getMonth()+1,1);return `${nx.getFullYear()}-${String(nx.getMonth()+1).padStart(2,'0')}`}
+    if(/este mes|mes actual|this month|este m[eê]s/i.test(lo)) return `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`
+    if(/pr[oó]ximo mes|mes que viene|next month|pr[oó]ximo m[eê]s/i.test(lo)){const nx=new Date(now.getFullYear(),now.getMonth()+1,1);return `${nx.getFullYear()}-${String(nx.getMonth()+1).padStart(2,'0')}`}
     return null
   }
 
@@ -2315,9 +2605,9 @@ gsap.fromTo('.tour',
   }
 
   function detectarPersonas(txt) {
-    const m=txt.match(/\b(\d+)\s*(persona|adulto|pax|huesped|huésped)\b/i); if(m) return parseInt(m[1])
-    const m2=txt.match(/\bpara\s+(\d+)\b|\bsomos\s+(\d+)\b|\b(\d+)\s+personas?\b/i); if(m2) return parseInt(m2[1]||m2[2]||m2[3])
-    const words={una:1,un:1,dos:2,tres:3,cuatro:4,cinco:5}
+    const m=txt.match(/\b(\d+)\s*(persona|adulto|pax|huesped|huésped|guest|people|pessoa|hóspede)\b/i); if(m) return parseInt(m[1])
+    const m2=txt.match(/\bpara\s+(\d+)\b|\bsomos\s+(\d+)\b|\b(\d+)\s+(personas?|guests?|pessoas?)\b/i); if(m2) return parseInt(m2[1]||m2[2]||m2[3])
+    const words={una:1,un:1,dos:2,tres:3,cuatro:4,cinco:5,one:1,two:2,three:3,four:4,five:5,um:1,uma:1,dois:2,duas:2,três:3,quatro:4}
     const lo=txt.toLowerCase()
     for(const[w,n]of Object.entries(words)) if(new RegExp(`\\b${w}\\b`).test(lo)) return n
     const solo=txt.match(/^\s*(\d+)\s*$/); if(solo) return parseInt(solo[1])
@@ -2326,16 +2616,16 @@ gsap.fromTo('.tour',
 
   function detectIntent(txt) {
     const t=txt.toLowerCase()
-    if(/precio|costo|cu[aá]nto|tarifa|vale|habitaci[oó]n|cuarto|suite|matrimonial|doble|simple/i.test(t)) return 'precios'
-    if(/aire.?acon|ac\b|acondicionado|cuales.+aire|habitacion.+aire/i.test(t)) return 'ac'
-    if(/paquete|rom[aá]ntico|wellness|familia am|retiro/i.test(t)) return 'paquetes'
-    if(/tour|catarata|ahuashiyacu|lamas|laguna sauce|sendero/i.test(t)) return 'tours'
-    if(/d[oó]nde est[aá]|ubicaci[oó]n|direcci[oó]n|c[oó]mo llegar|mapa/i.test(t)) return 'ubicacion'
-    if(/contacto|tel[eé]fono|whatsapp|email|correo/i.test(t)) return 'contacto'
-    if(/checkin|check.in|check.out|horario|llegada|depósito|deposito/i.test(t)) return 'checkin'
-    if(/servicio|piscina|restaurante|desayuno|incluye/i.test(t)) return 'servicios'
-    if(/reservar|reserva|book|apartar|quiero quedarme/i.test(t)) return 'reservar'
-    if(/disponib|libre|hay lugar|hay cuarto|busca|fecha|cuando/i.test(t)) return 'disponibilidad'
+    if(/precio|costo|cu[aá]nto|tarifa|vale|habitaci[oó]n|cuarto|suite|matrimonial|doble|simple|price|rate|room|quarto|pre[çc]o|custo/i.test(t)) return 'precios'
+    if(/aire.?acon|ac\b|acondicionado|air.?con|a\/c|ar.?condi/i.test(t)) return 'ac'
+    if(/paquete|rom[aá]ntico|wellness|familia am|retiro|package|romantic|family|pacote|fam[íi]lia/i.test(t)) return 'paquetes'
+    if(/tour|catarata|ahuashiyacu|lamas|laguna sauce|sendero|waterfall|trail|lagoon|cachoeira|trilha/i.test(t)) return 'tours'
+    if(/d[oó]nde est[aá]|ubicaci[oó]n|direcci[oó]n|c[oó]mo llegar|mapa|where|address|location|onde|endere[çc]o/i.test(t)) return 'ubicacion'
+    if(/contacto|tel[eé]fono|whatsapp|email|correo|contact|phone|contato|telefone/i.test(t)) return 'contacto'
+    if(/checkin|check.in|check.out|horario|llegada|dep[oó]sito|arrival|departure|chegada/i.test(t)) return 'checkin'
+    if(/servicio|piscina|restaurante|desayuno|incluye|service|pool|breakfast|includes|servi[çc]o|caf[eé]|inclui/i.test(t)) return 'servicios'
+    if(/reservar|reserva|book|apartar|quiero quedarme|booking/i.test(t)) return 'reservar'
+    if(/disponib|libre|hay lugar|busca|fecha|cuando|available|search|date|when|livre|data|quando/i.test(t)) return 'disponibilidad'
     return null
   }
 
@@ -2401,6 +2691,43 @@ gsap.fromTo('.tour',
       },{seen:new Set(),list:[]}).list
   }
 
+  function nightWord(n) {
+    const lang = window.LANG || 'es'
+    if (lang === 'en') return n !== 1 ? 'nights' : 'night'
+    if (lang === 'pt') return n !== 1 ? 'noites' : 'noite'
+    return n !== 1 ? 'noches' : 'noche'
+  }
+  function personWord(n) {
+    const lang = window.LANG || 'es'
+    if (lang === 'en') return n !== 1 ? 'guests' : 'guest'
+    if (lang === 'pt') return n !== 1 ? 'hóspedes' : 'hóspede'
+    return n !== 1 ? 'personas' : 'persona'
+  }
+  function getWALabel() {
+    const lang = window.LANG || 'es'
+    if (lang === 'en') return 'Contact on WhatsApp'
+    if (lang === 'pt') return 'Contato via WhatsApp'
+    return 'Contactar por WhatsApp'
+  }
+  function getOptionsLabel(i) {
+    const lang = window.LANG || 'es'
+    if (lang === 'en') return `Book option ${i+1}`
+    if (lang === 'pt') return `Reservar opção ${i+1}`
+    return `Reservar opción ${i+1}`
+  }
+  function getOtherDatesLabel() {
+    const lang = window.LANG || 'es'
+    if (lang === 'en') return 'Search other dates'
+    if (lang === 'pt') return 'Buscar outras datas'
+    return 'Buscar otras fechas'
+  }
+  function getOptionsIntroLabel(personas, nomCI, nomCO, noches) {
+    const lang = window.LANG || 'es'
+    if (lang === 'en') return `Options for ${personas} ${personWord(personas)} from ${nomCI} to ${nomCO} (${noches} ${nightWord(noches)}):\n\n`
+    if (lang === 'pt') return `Opções para ${personas} ${personWord(personas)} de ${nomCI} a ${nomCO} (${noches} ${nightWord(noches)}):\n\n`
+    return `Opciones para ${personas} ${personWord(personas)} del ${nomCI} al ${nomCO} (${noches} ${nightWord(noches)}):\n\n`
+  }
+
   function formatResult(rec, personas, ciISO, coISO, prefAC) {
     const ciDate = new Date(ciISO+'T12:00:00')
     const coDate = new Date(coISO+'T12:00:00')
@@ -2410,7 +2737,7 @@ gsap.fromTo('.tour',
     const pref = prefAC ? ' (con AC)' : ''
     if(rec.tipo==='sin_opcion') return{
       reply:`No hay habitaciones disponibles para ${personas} personas del ${nomCI} al ${nomCO}${pref}. Escríbenos al +51 975 464 923 y buscamos una solución.`,
-      qr:['Buscar otras fechas','Contactar por WhatsApp']
+      qr:[getOtherDatesLabel(), getWALabel()]
     }
     // Store structured options for the reservation flow
     conv.opciones = []
@@ -2419,7 +2746,7 @@ gsap.fromTo('.tour',
     conv.noches = noches
     conv.personas = personas
 
-    let reply=`Opciones para ${personas} persona(s) del ${nomCI} al ${nomCO} (${noches} noche${noches!==1?'s':''}):\n\n`
+    let reply = getOptionsIntroLabel(personas, nomCI, nomCO, noches)
     if(rec.sinAC) reply+=`No hay habitaciones con AC para esas fechas. Te muestro opciones con ventilador:\n\n`
     const qrOptions = []
     if(rec.tipo==='single'){
@@ -2427,18 +2754,18 @@ gsap.fromTo('.tour',
         const acTag=h.ac?' (AC)':' (ventilador)'
         reply+=`Opción ${i+1}: ${h.nombre}${acTag}\n  ${h.tipo} — S/ ${h.precio}/noche · S/ ${h.precio*noches} total\n  ${h.bloque}, Piso ${h.piso}\n\n`
         conv.opciones.push({ label:`${h.nombre}${acTag}`, tipo:h.tipo, nombre:h.nombre, precio:h.precio, noches, ac:h.ac, combo:false })
-        qrOptions.push(`Reservar opción ${i+1}`)
+        qrOptions.push(getOptionsLabel(i))
       })
     } else {
       rec.opciones.forEach((o,i)=>{
         const[a,b]=o.rooms
         reply+=`Opción ${i+1}: ${a.nombre} + ${b.nombre}\n  ${a.tipo}${a.ac?' (AC)':''} + ${b.tipo}${b.ac?' (AC)':''}\n  S/ ${o.precio}/noche · S/ ${o.precio*noches} total — ${o.mismoBloque?'mismo bloque':'bloques distintos'}\n\n`
         conv.opciones.push({ label:`${a.nombre} + ${b.nombre}`, tipo:`${a.tipo} + ${b.tipo}`, nombre:`${a.nombre} + ${b.nombre}`, precio:o.precio, noches, ac:false, combo:true })
-        qrOptions.push(`Reservar opción ${i+1}`)
+        qrOptions.push(getOptionsLabel(i))
       })
     }
     reply+=`¿Cuál opción te interesa?`
-    return{reply, qr:[...qrOptions,'Buscar otras fechas','Contactar por WhatsApp']}
+    return{reply, qr:[...qrOptions, getOtherDatesLabel(), getWALabel()]}
   }
 
   function showReservaForm(opcion) {
@@ -2448,16 +2775,25 @@ gsap.fromTo('.tour',
     const coDate = new Date(conv.coISO+'T12:00:00')
     const nomCI = ciDate.toLocaleDateString('es-PE',{day:'numeric',month:'long'})
     const nomCO = coDate.toLocaleDateString('es-PE',{day:'numeric',month:'long'})
+    const lang = window.LANG || 'es'
+    const lbl = {
+      nombre: {es:'Nombre completo', en:'Full name', pt:'Nome completo'}[lang],
+      dni: {es:'DNI / CE / Pasaporte', en:'Passport / ID', pt:'Passaporte / CPF'}[lang],
+      cel: {es:'Celular de contacto', en:'Contact phone', pt:'Celular de contato'}[lang],
+      phNombre: {es:'Juan Pérez García', en:'John Smith', pt:'João Silva'}[lang],
+      phDni: {es:'12345678', en:'A1234567', pt:'12345678'}[lang],
+      phCel: {es:'987654321', en:'+1234567890', pt:'11987654321'}[lang],
+    }
     wrap.innerHTML = `
       <div style="font-weight:600;margin-bottom:4px;color:var(--forest)">${opcion.label}</div>
-      <div style="font-size:13px;color:#555;margin-bottom:12px">${nomCI} al ${nomCO} · ${opcion.noches} noche${opcion.noches!==1?'s':''} · <strong>S/ ${opcion.precio*opcion.noches} total</strong></div>
-      <label>Nombre completo</label>
-      <input type="text" class="dp-nombre" placeholder="Juan Pérez García" style="width:100%;padding:8px 10px;border:1.5px solid #ddd;border-radius:8px;font-size:14px;margin-bottom:6px;outline:none">
-      <label>DNI / CE / Pasaporte</label>
-      <input type="text" class="dp-dni" placeholder="12345678" style="width:100%;padding:8px 10px;border:1.5px solid #ddd;border-radius:8px;font-size:14px;margin-bottom:6px;outline:none" maxlength="12">
-      <label>Celular de contacto</label>
-      <input type="tel" class="dp-cel" placeholder="987654321" style="width:100%;padding:8px 10px;border:1.5px solid #ddd;border-radius:8px;font-size:14px;margin-bottom:10px;outline:none" maxlength="9">
-      <button class="dp-confirm" disabled>Enviar reserva por WhatsApp</button>
+      <div style="font-size:13px;color:#555;margin-bottom:12px">${nomCI} al ${nomCO} · ${opcion.noches} ${nightWord(opcion.noches)} · <strong>S/ ${opcion.precio*opcion.noches} total</strong></div>
+      <label>${lbl.nombre}</label>
+      <input type="text" class="dp-nombre" placeholder="${lbl.phNombre}" style="width:100%;padding:8px 10px;border:1.5px solid #ddd;border-radius:8px;font-size:14px;margin-bottom:6px;outline:none">
+      <label>${lbl.dni}</label>
+      <input type="text" class="dp-dni" placeholder="${lbl.phDni}" style="width:100%;padding:8px 10px;border:1.5px solid #ddd;border-radius:8px;font-size:14px;margin-bottom:6px;outline:none" maxlength="12">
+      <label>${lbl.cel}</label>
+      <input type="tel" class="dp-cel" placeholder="${lbl.phCel}" style="width:100%;padding:8px 10px;border:1.5px solid #ddd;border-radius:8px;font-size:14px;margin-bottom:10px;outline:none" maxlength="15">
+      <button class="dp-confirm" disabled>${t('chat.form.confirm')}</button>
     `
     messages.appendChild(wrap)
     messages.scrollTop = messages.scrollHeight
@@ -2505,17 +2841,23 @@ gsap.fromTo('.tour',
   }
 
   async function procesar(text) {
-    if(/^(hola|buenas|buenos d[ií]as|buenas tardes|buenas noches|hi|hello)\b/i.test(text.trim()))
-      return{reply:'Hola. Puedo buscarte la mejor habitación con disponibilidad en tiempo real. ¿Qué necesitas?',qr:QUICK_INIT}
+    const R = getR()
+    const QUICK_INIT = getQUICK_INIT()
+    if(/^(hola|buenas|buenos d[ií]as|buenas tardes|buenas noches|hi|hello|hey|oi|olá|bom dia|boa tarde)\b/i.test(text.trim()))
+      return{reply:getBIENVENIDA(),qr:QUICK_INIT}
     const intent=detectIntent(text)
     const mesKey=detectarMes(text)
     const rango=detectarRango(text)
     const personas=detectarPersonas(text)
-    const prefAC=/con aire|con ac\b|aire acon|quiero ac/i.test(text)
+    const prefAC=/con aire|con ac\b|aire acon|quiero ac|air.?con|a\/c|ar.?condi/i.test(text)
     if(intent==='disponibilidad'||intent==='buscar'||
        (mesKey&&!rango)||
        text.toLowerCase().includes('buscar')||
-       text.toLowerCase().includes('disponibilidad')) {
+       text.toLowerCase().includes('disponibilidad')||
+       text.toLowerCase().includes('search')||
+       text.toLowerCase().includes('find')||
+       text.toLowerCase().includes('buscar')||
+       text.toLowerCase().includes('livre')) {
       if(personas && mesKey && rango) {
         const y=parseInt(mesKey.split('-')[0]),m=parseInt(mesKey.split('-')[1])
         const ciISO=`${y}-${String(m).padStart(2,'0')}-${String(rango.ci).padStart(2,'0')}`
@@ -2528,15 +2870,15 @@ gsap.fromTo('.tour',
       return null
     }
     const qrMap={
-      precios:['Buscar habitación','Habitaciones con AC','Ver paquetes'],
-      ac:['Buscar habitación con AC','Ver precios','Contacto'],
-      paquetes:['Buscar habitación','Ver precios','Tours disponibles'],
-      tours:['Ver paquetes','Buscar habitación','Contacto'],
-      ubicacion:['Ver precios','Buscar habitación','Contacto'],
-      contacto:['Contactar por WhatsApp','Buscar habitación','Ver precios'],
-      checkin:['Contactar por WhatsApp','Buscar habitación','Ver precios'],
-      servicios:['Ver precios','Habitaciones con AC','Buscar habitación'],
-      reservar:['Buscar habitación','Contactar por WhatsApp','Ver paquetes'],
+      precios: [QUICK_INIT[0], QUICK_INIT[2], getWALabel()],
+      ac: [QUICK_INIT[0], getWALabel()],
+      paquetes: [QUICK_INIT[0], QUICK_INIT[2], QUICK_INIT[3]],
+      tours: [QUICK_INIT[3], QUICK_INIT[0], getWALabel()],
+      ubicacion: [QUICK_INIT[0], getWALabel()],
+      contacto: [getWALabel(), QUICK_INIT[0], QUICK_INIT[2]],
+      checkin: [getWALabel(), QUICK_INIT[0], QUICK_INIT[2]],
+      servicios: [QUICK_INIT[2], QUICK_INIT[0]],
+      reservar: [QUICK_INIT[0], getWALabel(), QUICK_INIT[3]],
     }
     if(intent&&R[intent]) return{reply:R[intent],qr:qrMap[intent]||QUICK_INIT}
     return{reply:R.fallback,qr:QUICK_INIT}
@@ -2544,22 +2886,23 @@ gsap.fromTo('.tour',
 
   async function sendMessage(text) {
     text=text.trim(); if(!text||isTyping) return
+    const QUICK_INIT = getQUICK_INIT()
     qrWrap.innerHTML=''
     addMsg('user',text)
     input.value=''; input.style.height='auto'; sendBtn.disabled=true
 
-    // Handle "Contactar por WhatsApp"
-    if(/contactar por whatsapp/i.test(text)||/^whatsapp$/i.test(text)) {
+    // Handle "Contactar por WhatsApp" / "Contact on WhatsApp" / "Contato via WhatsApp"
+    if(/contactar por whatsapp|contact on whatsapp|contato via whatsapp/i.test(text)||/^whatsapp$/i.test(text)) {
       window.open('https://wa.me/51975464923','_blank')
       addMsg('bot','Abrimos WhatsApp para que puedas escribirnos directamente. ¿Hay algo más en que pueda ayudarte?')
       showQR(QUICK_INIT)
       sendBtn.disabled=false; input.focus(); return
     }
 
-    // Handle "Reservar opción X"
-    const opcionMatch = text.match(/reservar\s+opci[oó]n\s+(\d)/i)
+    // Handle "Reservar opción X" / "Book option X" / "Reservar opção X"
+    const opcionMatch = text.match(/reservar\s+opci[oó]n\s+(\d)|book\s+option\s+(\d)|reservar\s+op[çc][aã]o\s+(\d)/i)
     if(opcionMatch && conv.opciones && conv.opciones.length) {
-      const idx = parseInt(opcionMatch[1]) - 1
+      const idx = parseInt(opcionMatch[1]||opcionMatch[2]||opcionMatch[3]) - 1
       const opcion = conv.opciones[idx]
       if(opcion) {
         addMsg('bot','¡Excelente elección! Completa tus datos para finalizar la reserva:')
@@ -2572,7 +2915,7 @@ gsap.fromTo('.tour',
     const mesKey=detectarMes(text)
     const rango=detectarRango(text)
     const personas=detectarPersonas(text)
-    const prefAC=/con aire|con ac\b|aire acon/i.test(text)
+    const prefAC=/con aire|con ac\b|aire acon|air.?con|a\/c|ar.?condi/i.test(text)
     if((intent==='disponibilidad'||mesKey)&&personas&&rango&&mesKey){
       const y=parseInt(mesKey.split('-')[0]),m=parseInt(mesKey.split('-')[1])
       const ciISO=`${y}-${String(m).padStart(2,'0')}-${String(rango.ci).padStart(2,'0')}`
@@ -2591,7 +2934,7 @@ gsap.fromTo('.tour',
   function openChat(){
     isOpen=true; panel.classList.add('open'); btn.classList.add('open')
     if(notif)notif.remove(); input.focus()
-    if(messages.children.length===0) setTimeout(()=>{addMsg('bot',BIENVENIDA);showQR(QUICK_INIT)},300)
+    if(messages.children.length===0) setTimeout(()=>{addMsg('bot',getBIENVENIDA());showQR(getQUICK_INIT())},300)
   }
   function closeChat(){isOpen=false;panel.classList.remove('open');btn.classList.remove('open')}
 
