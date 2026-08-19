@@ -1082,7 +1082,7 @@ footer {
 ══════════════════════════════════════ */
 #chat-btn {
   position: fixed;
-  bottom: 96px;
+  bottom: 28px;
   right: 28px;
   z-index: 300;
   width: 54px;
@@ -1415,19 +1415,13 @@ footer {
   }
   #chat-btn {
     right: 14px;
-    bottom: 76px;
-    width: 50px;
-    height: 50px;
-  }
-  #wa-float {
-    right: 14px;
-    bottom: 14px;
+    bottom: 28px;
     width: 50px;
     height: 50px;
   }
   .chat-hint {
     right: 12px;
-    bottom: 138px;
+    bottom: 96px;
   }
 }
 
@@ -1441,30 +1435,10 @@ footer {
   .footer-social { justify-content: center; }
 }
 
-/* ── WHATSAPP FLOTANTE ──────────────────────── */
-#wa-float {
-  position: fixed;
-  bottom: 28px;
-  right: 28px;
-  z-index: 300;
-  width: 54px;
-  height: 54px;
-  background: #25D366;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 20px rgba(37,211,102,0.4);
-  transition: all 0.3s var(--ease);
-  text-decoration: none;
-}
-#wa-float:hover { transform: scale(1.1); box-shadow: 0 8px 32px rgba(37,211,102,0.55); }
-#wa-float svg { width: 28px; height: 28px; fill: #fff; }
-
 /* ── CHAT HINT ──────────────────────────────── */
 .chat-hint {
   position: fixed;
-  bottom: 158px;
+  bottom: 96px;
   right: 28px;
   z-index: 299;
   background: #fff;
@@ -1941,7 +1915,7 @@ footer {
 
     <div class="contacto-btns reveal">
       <button class="btn-primary" onclick="document.getElementById('chat-btn').click()">Chatear ahora</button>
-      <a href="https://wa.me/51975464923" target="_blank" class="btn-outline-light">Abrir WhatsApp</a>
+      <a href="https://wa.me/51975464923" target="_blank" class="btn-outline-light">Contactar por WhatsApp</a>
     </div>
   </div>
 </section>
@@ -2026,13 +2000,6 @@ footer {
 .dp-confirm:hover{background:#7a4f38}
 .dp-confirm:disabled{background:#bbb;cursor:default}
 </style>
-
-<!-- WhatsApp flotante -->
-<a href="https://wa.me/51975464923" target="_blank" id="wa-float" aria-label="Abrir WhatsApp">
-  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-  </svg>
-</a>
 
 <!-- Chat hint tooltip -->
 <div class="chat-hint" id="chatHint">
@@ -2213,14 +2180,14 @@ gsap.fromTo('.tour',
     contacto: `WhatsApp / Teléfono: +51 975 464 923 o +51 975 464 878\nEmail: maderalabrada@hotmail.com\nInstagram: @maderalabradalodge`,
     checkin: `Check-in: 2:00 pm. Check-out: 12:00 pm.\n\nPara reservar se requiere 50% de depósito:\nYape: 975464878 — Madera Labrada S.A.C.\nBCP: 550-03875919-0-03\n\nEl 50% restante se abona al llegar.`,
     servicios: `Todas las habitaciones incluyen:\nDesayuno continental, cóctel de bienvenida, piscina, WiFi, TV LED 32", baño privado, hamacas en balcón.\n\nInstalaciones: piscina selvática, Restaurante Los Tukos, lavandería, mirador.`,
-    reservar: `Para reservar necesito:\n\n1. Nombre completo\n2. DNI / CE / Pasaporte\n3. Celular de contacto\n4. Tipo de habitación y fechas\n\n50% de depósito: Yape 975464878 — Madera Labrada S.A.C.\n\nO escríbenos al WhatsApp +51 975 464 923.`,
+    reservar: `Para reservar busca la habitación disponible y yo te guío paso a paso. También puedes escribirnos directamente al WhatsApp +51 975 464 923.`,
     fallback: `Puedo ayudarte con disponibilidad, precios, habitaciones con AC, paquetes, tours o contacto. ¿Qué necesitas?`,
   }
 
   const QUICK_INIT = ['Buscar habitación', 'Habitaciones con AC', 'Ver precios', 'Paquetes especiales']
   const BIENVENIDA = 'Hola, soy Lucia de Madera Labrada Lodge. Puedo buscarte la mejor habitación con disponibilidad en tiempo real. ¿En qué te ayudo?'
 
-  let conv = { step: 'idle', personas: null, ciISO: null, coISO: null, prefAC: false }
+  let conv = { step: 'idle', personas: null, ciISO: null, coISO: null, prefAC: false, opciones: null, noches: 0 }
   let isOpen = false, isTyping = false
 
   const btn      = document.getElementById('chat-btn')
@@ -2316,7 +2283,7 @@ gsap.fromTo('.tour',
       const nomCI = ciDate.toLocaleDateString('es-PE',{day:'numeric',month:'long'})
       const nomCO = coDate.toLocaleDateString('es-PE',{day:'numeric',month:'long'})
       addMsg('user', `${selPersonas} persona(s) — del ${nomCI} al ${nomCO}${ac?' — con AC':''}`)
-      conv = { step: 'idle', personas: selPersonas, ciISO, coISO, prefAC: ac }
+      conv = { step: 'idle', personas: selPersonas, ciISO, coISO, prefAC: ac, opciones: null, noches: 0 }
       runSearch()
     })
   }
@@ -2443,29 +2410,86 @@ gsap.fromTo('.tour',
     const pref = prefAC ? ' (con AC)' : ''
     if(rec.tipo==='sin_opcion') return{
       reply:`No hay habitaciones disponibles para ${personas} personas del ${nomCI} al ${nomCO}${pref}. Escríbenos al +51 975 464 923 y buscamos una solución.`,
-      qr:['Otras fechas','Ver paquetes','Contacto']
+      qr:['Buscar otras fechas','Contactar por WhatsApp']
     }
+    // Store structured options for the reservation flow
+    conv.opciones = []
+    conv.ciISO = ciISO
+    conv.coISO = coISO
+    conv.noches = noches
+    conv.personas = personas
+
     let reply=`Opciones para ${personas} persona(s) del ${nomCI} al ${nomCO} (${noches} noche${noches!==1?'s':''}):\n\n`
-    if(rec.sinAC) reply+=`No hay habitaciones con AC disponibles para esas fechas. Te muestro las mejores disponibles con ventilador:\n\n`
+    if(rec.sinAC) reply+=`No hay habitaciones con AC para esas fechas. Te muestro opciones con ventilador:\n\n`
+    const qrOptions = []
     if(rec.tipo==='single'){
       rec.opciones.forEach((h,i)=>{
         const acTag=h.ac?' (AC)':' (ventilador)'
         reply+=`Opción ${i+1}: ${h.nombre}${acTag}\n  ${h.tipo} — S/ ${h.precio}/noche · S/ ${h.precio*noches} total\n  ${h.bloque}, Piso ${h.piso}\n\n`
+        conv.opciones.push({ label:`${h.nombre}${acTag}`, tipo:h.tipo, nombre:h.nombre, precio:h.precio, noches, ac:h.ac, combo:false })
+        qrOptions.push(`Reservar opción ${i+1}`)
       })
     } else {
       rec.opciones.forEach((o,i)=>{
         const[a,b]=o.rooms
         reply+=`Opción ${i+1}: ${a.nombre} + ${b.nombre}\n  ${a.tipo}${a.ac?' (AC)':''} + ${b.tipo}${b.ac?' (AC)':''}\n  S/ ${o.precio}/noche · S/ ${o.precio*noches} total — ${o.mismoBloque?'mismo bloque':'bloques distintos'}\n\n`
+        conv.opciones.push({ label:`${a.nombre} + ${b.nombre}`, tipo:`${a.tipo} + ${b.tipo}`, nombre:`${a.nombre} + ${b.nombre}`, precio:o.precio, noches, ac:false, combo:true })
+        qrOptions.push(`Reservar opción ${i+1}`)
       })
     }
-    reply+=`Para confirmar te pedimos el 50% de depósito (Yape: 975464878). También puedes escribirnos al +51 975 464 923.`
-    return{reply,qr:['Reservar ahora','Buscar otras fechas','Ver paquetes']}
+    reply+=`¿Cuál opción te interesa?`
+    return{reply, qr:[...qrOptions,'Buscar otras fechas','Contactar por WhatsApp']}
+  }
+
+  function showReservaForm(opcion) {
+    const wrap = document.createElement('div')
+    wrap.className = 'chat-dp'
+    const ciDate = new Date(conv.ciISO+'T12:00:00')
+    const coDate = new Date(conv.coISO+'T12:00:00')
+    const nomCI = ciDate.toLocaleDateString('es-PE',{day:'numeric',month:'long'})
+    const nomCO = coDate.toLocaleDateString('es-PE',{day:'numeric',month:'long'})
+    wrap.innerHTML = `
+      <div style="font-weight:600;margin-bottom:4px;color:var(--forest)">${opcion.label}</div>
+      <div style="font-size:13px;color:#555;margin-bottom:12px">${nomCI} al ${nomCO} · ${opcion.noches} noche${opcion.noches!==1?'s':''} · <strong>S/ ${opcion.precio*opcion.noches} total</strong></div>
+      <label>Nombre completo</label>
+      <input type="text" class="dp-nombre" placeholder="Juan Pérez García" style="width:100%;padding:8px 10px;border:1.5px solid #ddd;border-radius:8px;font-size:14px;margin-bottom:6px;outline:none">
+      <label>DNI / CE / Pasaporte</label>
+      <input type="text" class="dp-dni" placeholder="12345678" style="width:100%;padding:8px 10px;border:1.5px solid #ddd;border-radius:8px;font-size:14px;margin-bottom:6px;outline:none" maxlength="12">
+      <label>Celular de contacto</label>
+      <input type="tel" class="dp-cel" placeholder="987654321" style="width:100%;padding:8px 10px;border:1.5px solid #ddd;border-radius:8px;font-size:14px;margin-bottom:10px;outline:none" maxlength="9">
+      <button class="dp-confirm" disabled>Enviar reserva por WhatsApp</button>
+    `
+    messages.appendChild(wrap)
+    messages.scrollTop = messages.scrollHeight
+    const nombreIn = wrap.querySelector('.dp-nombre')
+    const dniIn    = wrap.querySelector('.dp-dni')
+    const celIn    = wrap.querySelector('.dp-cel')
+    const confirmBtn = wrap.querySelector('.dp-confirm')
+    function validateForm() {
+      confirmBtn.disabled = !(nombreIn.value.trim().length > 2 && dniIn.value.trim().length >= 6 && celIn.value.trim().length >= 9)
+    }
+    nombreIn.addEventListener('input', validateForm)
+    dniIn.addEventListener('input', validateForm)
+    celIn.addEventListener('input', validateForm)
+    confirmBtn.addEventListener('click', () => {
+      const msg = `Hola Madera Labrada, quiero reservar:\n• Habitación: ${opcion.nombre}\n• Fechas: ${nomCI} al ${nomCO} (${opcion.noches} noches)\n• Personas: ${conv.personas}\n• Total: S/ ${opcion.precio*opcion.noches}\n• Nombre: ${nombreIn.value.trim()}\n• DNI: ${dniIn.value.trim()}\n• Celular: ${celIn.value.trim()}`
+      wrap.remove()
+      qrWrap.innerHTML = ''
+      addMsg('user', `Solicitud de reserva enviada`)
+      const encodedMsg = encodeURIComponent(msg)
+      const div = document.createElement('div')
+      div.className = 'msg bot'
+      div.innerHTML = `<div class="msg-bubble">¡Perfecto! Tu solicitud está lista. Toca el botón para enviarla por WhatsApp y nuestro equipo confirmará en minutos.<br><br><a href="https://wa.me/51975464923?text=${encodedMsg}" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#25d366;color:#fff;padding:10px 20px;border-radius:20px;font-weight:600;text-decoration:none;font-size:14px">Abrir WhatsApp y enviar</a></div><div class="msg-time">${hora()}</div>`
+      messages.appendChild(div)
+      messages.scrollTop = messages.scrollHeight
+      conv.opciones = null
+    })
   }
 
   async function runSearch() {
     showTyping()
     const{personas,ciISO,coISO,prefAC}=conv
-    conv={step:'idle',personas:null,ciISO:null,coISO:null,prefAC:false}
+    conv={step:'idle',personas:null,ciISO:null,coISO:null,prefAC:false,opciones:null,noches:0}
     await new Promise(r=>setTimeout(r,800))
     const libres=await getDisponibles(ciISO,coISO)
     hideTyping()
@@ -2509,10 +2533,10 @@ gsap.fromTo('.tour',
       paquetes:['Buscar habitación','Ver precios','Tours disponibles'],
       tours:['Ver paquetes','Buscar habitación','Contacto'],
       ubicacion:['Ver precios','Buscar habitación','Contacto'],
-      contacto:['Ver precios','Buscar habitación','Ver paquetes'],
-      checkin:['Ver precios','Buscar habitación','Reservar ahora'],
+      contacto:['Contactar por WhatsApp','Buscar habitación','Ver precios'],
+      checkin:['Contactar por WhatsApp','Buscar habitación','Ver precios'],
       servicios:['Ver precios','Habitaciones con AC','Buscar habitación'],
-      reservar:['Buscar habitación','Ver precios','Ver paquetes'],
+      reservar:['Buscar habitación','Contactar por WhatsApp','Ver paquetes'],
     }
     if(intent&&R[intent]) return{reply:R[intent],qr:qrMap[intent]||QUICK_INIT}
     return{reply:R.fallback,qr:QUICK_INIT}
@@ -2523,6 +2547,27 @@ gsap.fromTo('.tour',
     qrWrap.innerHTML=''
     addMsg('user',text)
     input.value=''; input.style.height='auto'; sendBtn.disabled=true
+
+    // Handle "Contactar por WhatsApp"
+    if(/contactar por whatsapp/i.test(text)||/^whatsapp$/i.test(text)) {
+      window.open('https://wa.me/51975464923','_blank')
+      addMsg('bot','Abrimos WhatsApp para que puedas escribirnos directamente. ¿Hay algo más en que pueda ayudarte?')
+      showQR(QUICK_INIT)
+      sendBtn.disabled=false; input.focus(); return
+    }
+
+    // Handle "Reservar opción X"
+    const opcionMatch = text.match(/reservar\s+opci[oó]n\s+(\d)/i)
+    if(opcionMatch && conv.opciones && conv.opciones.length) {
+      const idx = parseInt(opcionMatch[1]) - 1
+      const opcion = conv.opciones[idx]
+      if(opcion) {
+        addMsg('bot','¡Excelente elección! Completa tus datos para finalizar la reserva:')
+        showReservaForm(opcion)
+        sendBtn.disabled=false; input.focus(); return
+      }
+    }
+
     const intent=detectIntent(text)
     const mesKey=detectarMes(text)
     const rango=detectarRango(text)
@@ -2532,7 +2577,7 @@ gsap.fromTo('.tour',
       const y=parseInt(mesKey.split('-')[0]),m=parseInt(mesKey.split('-')[1])
       const ciISO=`${y}-${String(m).padStart(2,'0')}-${String(rango.ci).padStart(2,'0')}`
       const coISO=`${y}-${String(m).padStart(2,'0')}-${String(rango.co).padStart(2,'0')}`
-      conv={step:'idle',personas,ciISO,coISO,prefAC}
+      conv={step:'idle',personas,ciISO,coISO,prefAC,opciones:null,noches:0}
       sendBtn.disabled=false
       return runSearch()
     }
